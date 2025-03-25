@@ -1,7 +1,15 @@
 
 <?php
-	mysql_connect("localhost","root","")or die("Gagal Koneksi");
-	mysql_select_db("skripsi-rica")or die("Tidak ada Database");
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "eraapor";
+
+$conn = mysqli_connect($host, $user, $pass, $db);
+if (!$conn) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
+
 
 	//fungsi untuk mengkonversi size file
 	function formatBytes($bytes, $precision = 2) { 

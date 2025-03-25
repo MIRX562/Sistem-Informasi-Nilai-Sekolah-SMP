@@ -1,6 +1,6 @@
 <?php 
 	require_once('layout/header.php');
-?>
+    ?>
 	<!-- Main Container -->
     <div class="main-container container-fluid">
         <!-- Page Container -->

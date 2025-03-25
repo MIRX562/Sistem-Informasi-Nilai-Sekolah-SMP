@@ -123,7 +123,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    Copyright 2015 | All Rights Reserved | <a href="#">Rika</a>        
+                    Copyright 2023 | All Rights Reserved | <a href="#">Bayu Tutor</a>        
                 </div>
             </div>
             <!-- / .row -->

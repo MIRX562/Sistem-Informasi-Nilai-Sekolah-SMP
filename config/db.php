@@ -1,5 +1,11 @@
-
 <?php
-	mysql_connect("localhost","root","")or die("Gagal Koneksi");
-	mysql_select_db("")or die("Tidak ada Database");
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "eraapor";
+
+$conn = mysqli_connect($host, $user, $pass, $db);
+if (!$conn) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
 ?>

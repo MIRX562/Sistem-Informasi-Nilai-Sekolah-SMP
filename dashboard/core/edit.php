@@ -1,6 +1,6 @@
 <?php
 	//Admin Edit 
-	if (isset($_GET['admin-edit'])) {
+	if (isset(intval($_GET['admin-edit']))) {
 		$id 	=	$_GET['admin-edit'];
 
 		if (isset($_POST['admin-update'])) {
@@ -20,8 +20,8 @@
 			}
 		}
 
-		$dataadmin 		= 	mysql_query("SELECT * FROM users WHERE id=$id");
-		$row 			= 	mysql_fetch_array($dataadmin);
+		$dataadmin = mysql_query("SELECT * FROM users WHERE id=$id") or die("Error: " . mysql_error());
+$row = mysql_fetch_array($dataadmin);
 	}
 ?>
 <?php 

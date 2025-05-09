@@ -10,7 +10,7 @@
     <!--[if lt IE 9]> 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <![endif]-->
-    <title>SMPN 14 Padang</title>
+    <title>Sistem Informasi E-Rapor</title>
     <meta name="description" content="">
     <meta name="author" content="Dictatorkid">
     <!--[if lt IE 9]>
@@ -123,7 +123,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    Copyright 2015 | All Rights Reserved | <a href="#">Rika</a>        
+                    Copyright 2023 | All Rights Reserved | <a href="#">Bayu Tutor</a>        
                 </div>
             </div>
             <!-- / .row -->

@@ -1,6 +1,6 @@
 <?php 
     if (isset($_SESSION['access'])) {
-        if ($_SESSION['access'] == 'siswa') {
+        if ($_SESSION['access'] == 'orang_tua') {
             if (isset($_POST['cari-nilai'])) {
                 include('tables/nilai1_table.php');
             }else{

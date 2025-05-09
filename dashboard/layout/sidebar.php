@@ -118,48 +118,8 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-thumbs-up"></i>
-                            <span class="menu-text"> Artikel </span>
-
-                            <i class="menu-expand"></i>
-                        </a>
-
-                        <ul class="submenu">
-                            <li>
-                                <a href="?artikel=list">
-                                    <span class="menu-text">List Artikel</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="?artikel=kategori">
-                                    <span class="menu-text">Kategori</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>                                        
-                    <li>
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-tasks"></i>
-                            <span class="menu-text"> Modul Pelajaran </span>
-
-                            <i class="menu-expand"></i>
-                        </a>
-
-                        <ul class="submenu">
-                            <li>
-                                <a href="?modul=download">
-                                    <span class="menu-text">Download</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="?modul=upload">
-                                    <span class="menu-text">Upload</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                                                         
+                   
                     <?php
                             }elseif ($_SESSION['access'] == 'guru') {
                     ?>
@@ -184,29 +144,9 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-tasks"></i>
-                            <span class="menu-text"> Modul Pelajaran </span>
-
-                            <i class="menu-expand"></i>
-                        </a>
-
-                        <ul class="submenu">
-                            <li>
-                                <a href="?modul=download">
-                                    <span class="menu-text">Download</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="?modul=upload">
-                                    <span class="menu-text">Upload</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    
                     <?php
-                            }elseif ($_SESSION['access'] == 'siswa') {
+                            }elseif ($_SESSION['access'] == 'orang_tua') {
                     ?>
                     <li>
                         <a href="#" class="menu-dropdown">
@@ -223,22 +163,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon fa fa-tasks"></i>
-                            <span class="menu-text"> Modul Pelajaran </span>
-
-                            <i class="menu-expand"></i>
-                        </a>
-
-                        <ul class="submenu">
-                            <li>
-                                <a href="?modul=download">
-                                    <span class="menu-text">Download</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                
                     <?php
                             }
                         }

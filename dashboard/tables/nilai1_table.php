@@ -1,3 +1,4 @@
+
                         <div class="col-xs-12 col-md-12">
                             <div class="well with-header  with-footer">
                                 <div class="header bg-blue">
@@ -6,6 +7,7 @@
                                 <div class="col-lg-12" style="padding-bottom: 20px;">
                                     <div class="col-md-6 pull-left">
                                     <?php 
+                                        include('../config/db.php');
                                         $semester   =   $_POST['semester'];
                                         $tahun      =   $_POST['tahun'];
                                         $namasiswa  =   $_SESSION['name'];
@@ -18,6 +20,7 @@
                                                                 INNER JOIN tahun ON nilai.tahun_id=tahun.tahun_id 
                                                                 WHERE users.name='$namasiswa' AND semester.semester_id='$semester' AND tahun.tahun_id='$tahun'
                                                                 ORDER BY users.name ASC");
+                                        
                                         $row    =   mysql_fetch_array($nilai);
                                     ?>
                                         <table width="100%">

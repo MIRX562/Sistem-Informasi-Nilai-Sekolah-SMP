@@ -57,9 +57,16 @@
                                     <thead class="bordered-darkorange">
                                         <tr>
                                             <th width="5%">#</th>
-                                            <th width="65%">Nama Siswa</th>
+                                            <th width="45%">Nama Siswa</th>
                                             <th width="15%">KKM</th>
-                                            <th width="15%">Poin</th>
+                                            <th width="15%">UH</th>
+                                            <th width="15%">PAS</th>
+                                            <th width="15%">P5RA</th>
+                                            <th width="15%">Tugas</th>
+                                            <th width="15%">Kehadiran</th>
+                                            <th width="15%">Keaktifan</th>
+                                            <th width="15%">Kekompakkan</th>
+                                            <th width="15%">Nilai Akhir</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,7 +80,7 @@
                                                     $pelajaran  =   $_POST['pelajaran'];
                                                     $semester   =   $_POST['semester'];
                                                     $tahun      =   $_POST['tahun'];
-                                                    $access     =   'siswa'; 
+                                                    $access     =   'orang_tua'; 
                                                     $kkm        =   $_POST['kkm'];
                                                     $sql = mysql_query("SELECT users.id, users.name, users.access, kelas.kelas_id, kelas.kelas_nama 
                                                                         FROM users
@@ -97,7 +104,28 @@
                                                 </td>
                                                 <td><?php echo $kkm; ?></td>
                                                 <td>
-                                                    <input type="text" class="form-control" name="nilai[]" id="nilai[]" />
+                                                    <input type="text" class="form-control" name="uh[]" id="uh[]" /> 
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="pas[]" id="pas[]" /> 
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="p5ra[]" id="p5ra[]" /> 
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="tugas[]" id="tugas[]" /> 
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="kehadiran[]" id="kehadiran[]" /> 
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="keaktifan[]" id="keaktifan[]" /> 
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="kekompakan[]" id="kekompakan[]" /> 
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="nilai_akhir[]" id="nilai_akhir[]" readonly /> 
                                                 </td>
                                             </tr>
                                             <?php 

@@ -1,7 +1,7 @@
 
 <?php
 	mysql_connect("localhost","root","")or die("Gagal Koneksi");
-	mysql_select_db("skripsi-rica")or die("Tidak ada Database");
+	mysql_select_db("sims2")or die("Tidak ada Database");
 
 	//fungsi untuk mengkonversi size file
 	function formatBytes($bytes, $precision = 2) { 

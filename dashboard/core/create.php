@@ -52,10 +52,10 @@
 		$kelas 		=	$_POST['kelas'];
 
 		$name 		= 	mysql_query("INSERT INTO users (`id`, `nomor_induk`, `name`, `username`, `password`, `telp`, `alamat`, `status`, `jenis_kelamin`, `kelas_id`, `access`) 
-									VALUES (NULL, '$nis', '$name', '$username', '$password', '$telp', '$alamat', '$status', '$kelamin', '$kelas', 'siswa')");
+									VALUES (NULL, '$nis', '$name', '$username', '$password', '$telp', '$alamat', '$status', '$kelamin', '$kelas', 'orang_tua')");
 
 		if ($name) {
-			echo "<meta http-equiv='refresh' content='0;URL=?users=siswa'>";
+			echo "<meta http-equiv='refresh' content='0;URL=?users=orang_tua'>";
 		}
 	}
 ?>
@@ -137,18 +137,58 @@
 		$jenis 		=	$_POST['jenis'];
 		$tahun 		=	$_POST['tahun'];
 		$kkm 		=	$_POST['kkm'];
-		$nilaipoin	=	$_POST['nilai'];
+		// $nilaipoin	=	$_POST['nilai'];
+		$uh		=	$_POST['uh'];
+		$pas		=	$_POST['pas'];
+		$p5ra		=	$_POST['p5ra'];
+		$tugas		=	$_POST['tugas'];
+		$kehadiran		=	$_POST['kehadiran'];
+		$keaktifan		=	$_POST['keaktifan'];
+		$kekompakan		=	$_POST['kekompakan'];
 		$jumlahdata	=	count($name);
 
-		for($x=0;$x<$jumlahdata;$x++) {
-			$nilai	=	mysql_query("INSERT INTO nilai (`nilai_id`, `id`, `pelajaran_id`, `semester_id`, `tahun_id`,`nilai_kkm`, `nilai_poin`) 
-										VALUES (NULL, '$name[$x]', '$pelajaran[$x]', '$semester[$x]', '$tahun[$x]', '$kkm[$x]', '$nilaipoin[$x]')");	
-			if ($nilai) {
-				echo "<meta http-equiv='refresh' content='0;URL= ?nilai=input '/>";
-			}else{
-				echo "Gagal Input Nilai";
-			}
-		}
+		for($x=0; $x<$jumlahdata; $x++) {
+            // Hitung nilai_akhir berdasarkan rumus
+            $nilai_akhir = 0;
+            
+            // Konversi nilai ke float untuk perhitungan
+            $uh_value = floatval($uh[$x]);
+            $pas_value = floatval($pas[$x]);
+            $p5ra_value = floatval($p5ra[$x]);
+            $tugas_value = floatval($tugas[$x]);
+            $kehadiran_value = floatval($kehadiran[$x]);
+            $keaktifan_value = floatval($keaktifan[$x]);
+            $kekompakan_value = floatval($kekompakan[$x]);
+            
+            // Hitung nilai_akhir berdasarkan keberadaan nilai p5ra
+            if (!empty($p5ra[$x]) && $p5ra_value > 0) {
+                // Jika p5ra ada
+                $nilai_akhir = ($uh_value * 0.20) + ($pas_value * 0.30) + ($p5ra_value * 0.20) + 
+                               ($tugas_value * 0.15) + ($kehadiran_value * 0.05) + 
+                               ($keaktifan_value * 0.05) + ($kekompakan_value * 0.05);
+            } else {
+                // Jika p5ra tidak ada
+                $nilai_akhir = ($uh_value * 0.25) + ($pas_value * 0.35) + ($tugas_value * 0.20) + 
+                               ($kehadiran_value * 0.075) + ($keaktifan_value * 0.0625) + 
+                               ($kekompakan_value * 0.0625);
+            }
+            
+            // Bulatkan nilai_akhir ke 2 desimal
+            $nilai_akhir = round($nilai_akhir, 2);
+            
+            // Simpan ke database
+            $nilai = mysql_query("INSERT INTO nilai (nilai_id, id, pelajaran_id, semester_id, tahun_id, nilai_kkm, 
+                                 uh, pas, p5ra, tugas, kehadiran, keaktifan, kekompakan, nilai_akhir) 
+                                 VALUES (NULL, '$name[$x]', '$pelajaran[$x]', '$semester[$x]', '$tahun[$x]', 
+                                 '$kkm[$x]', '$uh[$x]', '$pas[$x]', '$p5ra[$x]', '$tugas[$x]', 
+                                 '$kehadiran[$x]', '$keaktifan[$x]', '$kekompakan[$x]', '$nilai_akhir')");
+            
+            if ($nilai) {
+                echo "<meta http-equiv='refresh' content='0;URL= ?nilai=input '/>";
+            } else {
+                echo "Gagal Input Nilai";
+            }
+        }
 	}
 ?>
 <?php 
@@ -180,19 +220,4 @@
             echo '<div class="error">ERROR: Ekstensi file tidak di izinkan!</div>';
         }
     }
-?>
-<?php 
-	//Artikel Create
-	if (isset($_POST['create-artikel'])) {
-		$judul 		=	$_POST['judul'];
-		$isi		=	$_POST['isi'];
-		$kategori 	=	$_POST['kategori'];
-
-		$artikel 	=	mysql_query("INSERT INTO artikel (`artikel_id`, `artikel_judul`, `artikel_isi`, `artikel_tgl`, `kategori_id`) 
-									VALUES (NULL, '$judul', '$isi', now(), '$kategori')");
-
-		if ($artikel) {
-			echo "<meta http-equiv='refresh' content='0;URL=?artikel=list'>";
-		}
-	}
 ?>

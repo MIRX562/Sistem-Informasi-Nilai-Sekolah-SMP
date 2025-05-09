@@ -1,18 +1,19 @@
-<?php 
-    session_start();
-    require_once('config/db.php');
-    if (!isset($_SESSION['username'])) {
-        header('Location: ../index.php');
-    }
+<?php
+session_start();
+require_once('config/db.php');
+// if (!isset($_SESSION['username'])) {
+//     header('Location: ../index.php');
+// }
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="utf-8" />
     <title>Sistem Informasi E-Rapor</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />  
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <!--Basic Styles-->
@@ -22,8 +23,9 @@
     <link href="assets/css/weather-icons.min.css" rel="stylesheet" />
 
     <!--Fonts-->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300"
-          rel="stylesheet" type="text/css">
+    <link
+        href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300"
+        rel="stylesheet" type="text/css">
 
     <!--Beyond styles-->
     <link id="beyond-link" href="assets/css/beyond.min.css" rel="stylesheet" />
@@ -41,11 +43,12 @@
 </head>
 <!-- /Head -->
 <!-- Body -->
+
 <body>
     <!-- Loading Container -->
-    <div class="loading-container">
+    <!-- <div class="loading-container">
         <div class="loader"></div>
-    </div>
+    </div> -->
     <!--  /Loading Container -->
     <!-- Navbar -->
     <div class="navbar">
@@ -55,7 +58,7 @@
                 <div class="navbar-header pull-left">
                     <a href="#" class="navbar-brand">
                         <small>
-                            <!-- <img src="assets/img/logo.png" alt="" /> -->
+                            <!-- <img src="../assets/images/logo.png" alt="" /> -->
                         </small>
                     </a>
                 </div>
@@ -98,4 +101,3 @@
             </div>
         </div>
     </div>
-    <!-- /Navbar -->

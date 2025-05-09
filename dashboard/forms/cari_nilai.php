@@ -153,3 +153,40 @@
         }
     }
 ?>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Cari Data Nilai Siswa</h3>
+    </div>
+    <div class="panel-body">
+        <form method="post" action="">
+            <div class="form-group">
+                <label>Tahun Ajaran</label>
+                <select name="tahun_id" class="form-control">
+                    <option value="">Pilih Tahun Ajaran</option>
+                    <?php while($row = mysqli_fetch_array($tahun)) { ?>
+                    <option value="<?php echo $row['tahun_id'] ?>"><?php echo $row['tahun_nama'] ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Semester</label>
+                <select name="semester_id" class="form-control">
+                    <option value="">Pilih Semester</option>
+                    <?php while($row = mysqli_fetch_array($semester)) { ?>
+                    <option value="<?php echo $row['semester_id'] ?>"><?php echo $row['semester_nama'] ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Kelas</label>
+                <select name="kelas_id" class="form-control">
+                    <option value="">Pilih Kelas</option>
+                    <?php while($row = mysqli_fetch_array($kelas)) { ?>
+                    <option value="<?php echo $row['kelas_id'] ?>"><?php echo $row['kelas_nama'] ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+            <button type="submit" name="submit" class="btn btn-primary">Cari Data</button>
+        </form>
+    </div>
+</div>

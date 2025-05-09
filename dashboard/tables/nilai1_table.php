@@ -20,7 +20,8 @@
                                                                 INNER JOIN tahun ON nilai.tahun_id=tahun.tahun_id 
                                                                 WHERE users.name='$namasiswa' AND semester.semester_id='$semester' AND tahun.tahun_id='$tahun'
                                                                 ORDER BY users.name ASC");
-                                        
+
+                                        echo $namasiswa;
                                         $row    =   mysql_fetch_array($nilai);
                                     ?>
                                         <table width="100%">
@@ -118,6 +119,7 @@
                                                                 INNER JOIN tahun ON nilai.tahun_id=tahun.tahun_id 
                                                                 WHERE users.name='$nama' AND semester.semester_id='$semester' AND tahun.tahun_id='$tahun'                                                            
                                                                 ORDER BY users.name ASC");
+                                            
                                             $row1   =   mysql_fetch_array($rata);
                                             $poin   =   ROUND($row1['poin']);
                                         ?>

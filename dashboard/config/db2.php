@@ -1,18 +1,17 @@
 <?php
-// Database connection parameters
 $host = "localhost";
-$username = "root";  // Default XAMPP username
-$password = "";      // Default XAMPP password (empty)
-$database = "sims2";  // Your database name from the SQL file
+$user = "root";
+$pass = "";
+$database = "sims2";
 
-// Create connection
-$conn = mysqli_connect($host, $username, $password, $database);
-
-// Check connection
+$conn = mysqli_connect($host, $user, $pass, $database);
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Set charset to handle special characters properly
+// Set UTF-8 encoding
 mysqli_set_charset($conn, "utf8");
+
+// Function to convert file sizes
+
 ?>

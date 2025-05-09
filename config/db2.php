@@ -1,12 +1,12 @@
 <?php
 // Database connection parameters
 $host = "localhost";
-$username = "root";  // Default XAMPP username
-$password = "";      // Default XAMPP password (empty)
+$user = "root";  // Default XAMPP username
+$pass = "";      // Default XAMPP password (empty)
 $database = "sims2";  // Your database name from the SQL file
 
 // Create connection
-$conn = mysqli_connect($host, $username, $password, $database);
+$conn = mysqli_connect($host, $user, $pass, $database);
 
 // Check connection
 if (!$conn) {

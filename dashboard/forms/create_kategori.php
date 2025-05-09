@@ -13,12 +13,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label no-padding-right">Kategori Deskripsi</label>
+                        <label class="col-sm-2 control-label no-padding-right">Deskripsi</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="deskripsi" placeholder="Deskripsi" required>
+                            <textarea class="form-control" name="deskripsi" placeholder="Deskripsi" required></textarea>
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-primary" name="create-kategori">Create</button>

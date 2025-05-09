@@ -1,17 +1,17 @@
 <?php
-<<<<<<< HEAD
-mysql_connect("localhost:3306", "root", "") or die("Gagal Koneksi");
-mysql_select_db("sims2") or die("Tidak ada Database");
-?>
-=======
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "eraapor";
+$host = 'localhost';
+$username = 'root';
+$password = '';
+$database = 'sims2';
 
-$conn = mysqli_connect($host, $user, $pass, $db);
+// Create connection
+$conn = mysqli_connect($host, $username, $password, $database);
+
+// Check connection
 if (!$conn) {
-    die("Koneksi gagal: " . mysqli_connect_error());
+    die("Connection failed: " . mysqli_connect_error());
 }
+
+// Set charset to utf8
+mysqli_set_charset($conn, "utf8");
 ?>
->>>>>>> 9c6c95edbcccb84bd1ebe2f42224492e0500262d

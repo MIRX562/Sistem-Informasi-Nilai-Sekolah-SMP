@@ -1,121 +1,105 @@
-<?php 
-	//Admin Delete
-	if (isset($_GET['admin-del'])) {
-		$id 	=	$_GET['admin-del'];
+<?php
+include "config/db.php";
 
-		$delete 	=	mysql_query("DELETE FROM users WHERE id = $id");
-		if ($delete) {
-			echo "<meta http-equiv='refresh' content='0;URL= ?users=admin '/>";
-		}
-	}
-?>
-<?php 
-	//Guru Delete
-	if (isset($_GET['guru-del'])) {
-		$id 	=	$_GET['guru-del'];
+// Delete admin
+if (isset($_GET['admin-del'])) {
+	$id = mysqli_real_escape_string($conn, $_GET['admin-del']);
 
-		$delete 	=	mysql_query("DELETE FROM users WHERE id = $id");
-		if ($delete) {
-			echo "<meta http-equiv='refresh' content='0;URL= ?users=guru '/>";
-		}
-	}
-?>
-<?php 
-	//Siswa Delete
-	if (isset($_GET['siswa-del'])) {
-		$id 	=	$_GET['siswa-del'];
+	$query = mysqli_query($conn, "DELETE FROM users WHERE id='$id' AND access='admin'");
 
-		$delete 	=	mysql_query("DELETE FROM users WHERE id = $id");
-		if ($delete) {
-			echo "<meta http-equiv='refresh' content='0;URL= ?users=siswa '/>";
-		}
+	if ($query) {
+		echo "<script>alert('Data berhasil dihapus!'); window.location='?users=admin';</script>";
+	} else {
+		echo "<script>alert('Data gagal dihapus!'); window.location='?users=admin';</script>";
 	}
-?>
-<?php 
-	//Kelas Delete
-	if (isset($_GET['kelas-del'])) {
-		$id 	=	$_GET['kelas-del'];
+}
 
-		$delete 	=	mysql_query("DELETE FROM kelas WHERE kelas_id = $id");
-		if ($delete) {
-			echo "<meta http-equiv='refresh' content='0;URL= ?akademik=kelas '/>";
-		}
-	}
-?>
-<?php 
-	//Tahun Ajaran Delete
-	if (isset($_GET['tahun-del'])) {
-		$id 	=	$_GET['tahun-del'];
+// Delete guru
+if (isset($_GET['guru-del'])) {
+	$id = mysqli_real_escape_string($conn, $_GET['guru-del']);
 
-		$delete 	=	mysql_query("DELETE FROM tahun WHERE tahun_id = $id");
-		if ($delete) {
-			echo "<meta http-equiv='refresh' content='0;URL= ?akademik=tahun '/>";
-		}
-	}
-?>
-<?php 
-	//Mata Pelajaran Delete
-	if (isset($_GET['pelajaran-del'])) {
-		$id 	=	$_GET['pelajaran-del'];
+	$query = mysqli_query($conn, "DELETE FROM users WHERE id='$id' AND access='guru'");
 
-		$delete 	=	mysql_query("DELETE FROM pelajaran WHERE pelajaran_id = $id");
-		if ($delete) {
-			echo "<meta http-equiv='refresh' content='0;URL= ?akademik=pelajaran '/>";
-		}
+	if ($query) {
+		echo "<script>alert('Data berhasil dihapus!'); window.location='?users=guru';</script>";
+	} else {
+		echo "<script>alert('Data gagal dihapus!'); window.location='?users=guru';</script>";
 	}
-?>
-<?php 
-	//Data Sekolah Delete
-	if (isset($_GET['sekolah-del'])) {
-		$id 	=	$_GET['sekolah-del'];
+}
 
-		$delete 	=	mysql_query("DELETE FROM sekolah WHERE sekolah_id = $id");
-		if ($delete) {
-			echo "<meta http-equiv='refresh' content='0;URL= ?akademik=sekolah '/>";
-		}
-	}
-?>
-<?php 
-	//Modul Delete
-	if (isset($_GET['modul-del'])) {
-		$id 	=	$_GET['modul-del'];
+// Delete siswa
+if (isset($_GET['siswa-del'])) {
+	$id = mysqli_real_escape_string($conn, $_GET['siswa-del']);
 
-		$delete 	=	mysql_query("DELETE FROM download WHERE id = $id");
-		if ($delete) {
-			echo "<meta http-equiv='refresh' content='0;URL= ?modul=download '/>";
-		}
-	}
-?>
-<?php 
-	//Kategori Delete
-	if (isset($_GET['kategori-del'])) {
-		$id 	=	$_GET['kategori-del'];
+	$query = mysqli_query($conn, "DELETE FROM users WHERE id='$id' AND access='siswa'");
 
-		$delete 	=	mysql_query("DELETE FROM kategori WHERE kategori_id = $id");
-		if ($delete) {
-			echo "<meta http-equiv='refresh' content='0;URL= ?artikel=kategori '/>";
-		}
+	if ($query) {
+		echo "<script>alert('Data berhasil dihapus!'); window.location='?users=siswa';</script>";
+	} else {
+		echo "<script>alert('Data gagal dihapus!'); window.location='?users=siswa';</script>";
 	}
-?>
-<?php 
-	//Kategori Delete
-	if (isset($_GET['artikel-del'])) {
-		$id 	=	$_GET['artikel-del'];
+}
 
-		$delete 	=	mysql_query("DELETE FROM artikel WHERE artikel_id = $id");
-		if ($delete) {
-			echo "<meta http-equiv='refresh' content='0;URL= ?artikel=list '/>";
-		}
-	}
-?>
-<?php 
-	//Nilai Delete
-	if (isset($_GET['nilai-del'])) {
-		$id 	=	$_GET['nilai-del'];
+// Delete nilai
+if (isset($_GET['nilai-del'])) {
+	$id = mysqli_real_escape_string($conn, $_GET['nilai-del']);
 
-		$delete 	=	mysql_query("DELETE FROM nilai WHERE nilai_id = $id");
-		if ($delete) {
-			echo "<meta http-equiv='refresh' content='0;URL= ?nilai=tampil '/>";
-		}
+	$query = mysqli_query($conn, "DELETE FROM nilai WHERE nilai_id='$id'");
+
+	if ($query) {
+		echo "<script>alert('Data berhasil dihapus!'); window.location='?nilai=tampil';</script>";
+	} else {
+		echo "<script>alert('Data gagal dihapus!'); window.location='?nilai=tampil';</script>";
 	}
+}
+
+// Delete artikel
+if (isset($_GET['artikel-del'])) {
+	$id = mysqli_real_escape_string($conn, $_GET['artikel-del']);
+
+	$query = mysqli_query($conn, "DELETE FROM artikel WHERE artikel_id='$id'");
+
+	if ($query) {
+		echo "<script>alert('Data berhasil dihapus!'); window.location='?artikel=list';</script>";
+	} else {
+		echo "<script>alert('Data gagal dihapus!'); window.location='?artikel=list';</script>";
+	}
+}
+
+// Delete kategori
+if (isset($_GET['kategori-del'])) {
+	$id = mysqli_real_escape_string($conn, $_GET['kategori-del']);
+
+	$query = mysqli_query($conn, "DELETE FROM kategori WHERE kategori_id='$id'");
+
+	if ($query) {
+		echo "<script>alert('Data berhasil dihapus!'); window.location='?artikel=kategori';</script>";
+	} else {
+		echo "<script>alert('Data gagal dihapus!'); window.location='?artikel=kategori';</script>";
+	}
+}
+
+// Delete file
+if (isset($_GET['file-del'])) {
+	$id = mysqli_real_escape_string($conn, $_GET['file-del']);
+
+	// Get file path before deleting record
+	$result = mysqli_query($conn, "SELECT file_link FROM file WHERE file_id='$id'");
+	$row = mysqli_fetch_array($result);
+	$file_path = "../files/" . $row['file_link'];
+
+	// Delete file from server
+	if (file_exists($file_path)) {
+		unlink($file_path);
+	}
+
+	// Delete record from database
+	$query = mysqli_query($conn, "DELETE FROM file WHERE file_id='$id'");
+
+	if ($query) {
+		echo "<script>alert('File berhasil dihapus!'); window.location='?modul=download';</script>";
+	} else {
+		echo "<script>alert('File gagal dihapus!'); window.location='?modul=download';</script>";
+	}
+}
 ?>

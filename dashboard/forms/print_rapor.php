@@ -1,5 +1,4 @@
 <?php
-require_once('../config/db2.php');
 
 // Start output buffering to prevent premature output
 
@@ -120,69 +119,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="col-lg-12 col-sm-12 col-xs-12">
     <div class="widget">
         <div class="widget-header bordered-bottom bordered-lightred">
-            <span class="widget-caption">Form Cetak Rapor Siswa</span>
+            <span class="widget-caption">Print Rapor Form</span>
         </div>
         <div class="widget-body">
             <div id="horizontal-form">
-                <form class="form-horizontal" role="form" method="GET" action="../core/generate_report_pdf.php"
-                    target="_blank">
-                    <?php if ($access === 'admin' || $access === 'guru'): ?>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label no-padding-right">Siswa</label>
-                            <div class="col-sm-10">
-                                <select name="student_id" id="student_id" style="width:100%;" required>
-                                    <option value="">-- Pilih Siswa --</option>
-                                    <?php foreach ($students as $student): ?>
-                                        <option value="<?php echo $student['id']; ?>">
-                                            <?php echo $student['nomor_induk'] . ' - ' . $student['name'] . ' (' . $student['kelas_nama'] . ')'; ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                    <?php else: ?>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label no-padding-right">Siswa</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control"
-                                    value="<?php echo $student_info['name'] . ' (' . $student_info['kelas_nama'] . ')'; ?>"
-                                    disabled>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-
+                <form class="form-horizontal" role="form" method="POST" target="_blank"
+                    action="../core/generate_report_pdf.php">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label no-padding-right">Tahun Ajaran</label>
+                        <label class="col-sm-2 control-label no-padding-right">Siswa</label>
                         <div class="col-sm-10">
-                            <select name="tahun_id" id="tahun_id" style="width:100%;" required>
-                                <option value="">-- Pilih Tahun Ajaran --</option>
-                                <?php foreach ($academic_years as $year): ?>
-                                    <option value="<?php echo $year['tahun_id']; ?>">
-                                        <?php echo $year['tahun_nama']; ?>
-                                    </option>
-                                <?php endforeach; ?>
+                            <select id="e1" style="width:100%;" name="siswa" required>
+                                <?php
+                                $siswa = mysqli_query($conn, "SELECT * FROM users WHERE access='siswa' ORDER BY name ASC");
+                                while ($data = mysqli_fetch_array($siswa)) {
+                                    ?>
+                                    <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
+                                    <?php
+                                }
+                                ?>
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label class="col-sm-2 control-label no-padding-right">Semester</label>
                         <div class="col-sm-10">
-                            <select name="semester_id" id="semester_id" style="width:100%;" required>
-                                <option value="">-- Pilih Semester --</option>
-                                <?php foreach ($semesters as $semester): ?>
-                                    <option value="<?php echo $semester['semester_id']; ?>">
-                                        <?php echo $semester['semester_nama']; ?>
-                                    </option>
-                                <?php endforeach; ?>
+                            <select id="e2" style="width:100%;" name="semester" required>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label no-padding-right">Tahun Ajaran</label>
+                        <div class="col-sm-10">
+                            <select id="e3" style="width:100%;" name="tahun" required>
+                                <?php
+                                $tahun = mysqli_query($conn, "SELECT * FROM tahun");
+                                while ($data = mysqli_fetch_array($tahun)) {
+                                    ?>
+                                    <option value="<?php echo $data['tahun_id']; ?>"><?php echo $data['tahun_nama']; ?>
+                                    </option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
                     <hr />
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">Cetak Rapor</button>
+                            <button type="submit" class="btn btn-primary" name="print">Print</button>
                             <button type="reset" class="btn btn-warning">Reset</button>
                         </div>
                     </div>
@@ -191,3 +177,143 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </div>
+
+<?php
+include "../config/db.php";
+
+// Get student information
+if (isset($_GET['siswa'])) {
+    $siswa_id = mysqli_real_escape_string($conn, $_GET['siswa']);
+    $semester = mysqli_real_escape_string($conn, $_GET['semester']);
+    $tahun = mysqli_real_escape_string($conn, $_GET['tahun']);
+
+    // Get student details
+    $siswa_query = mysqli_query($conn, "SELECT u.*, k.kelas_nama 
+                                      FROM users u 
+                                      LEFT JOIN kelas k ON u.kelas_id = k.kelas_id 
+                                      WHERE u.id = '$siswa_id'");
+    $siswa = mysqli_fetch_assoc($siswa_query);
+
+    // Get school information
+    $sekolah_query = mysqli_query($conn, "SELECT * FROM sekolah LIMIT 1");
+    $sekolah = mysqli_fetch_assoc($sekolah_query);
+
+    // Get all grades
+    $nilai_query = mysqli_query($conn, "SELECT n.*, p.pelajaran_nama, u.name as guru_name 
+                                      FROM nilai n 
+                                      LEFT JOIN pelajaran p ON n.pelajaran_id = p.pelajaran_id 
+                                      LEFT JOIN users u ON p.guru_id = u.id 
+                                      WHERE n.id = '$siswa_id' 
+                                      AND n.semester_id = '$semester' 
+                                      AND n.tahun_id = '$tahun'
+                                      ORDER BY p.pelajaran_nama ASC");
+
+    // Calculate averages
+    $total_nilai = 0;
+    $total_pelajaran = mysqli_num_rows($nilai_query);
+    $nilai_data = array();
+
+    while ($nilai = mysqli_fetch_assoc($nilai_query)) {
+        $nilai_data[] = $nilai;
+        $total_nilai += $nilai['nilai_akhir'];
+    }
+
+    $rata_rata = $total_pelajaran > 0 ? round($total_nilai / $total_pelajaran, 2) : 0;
+
+    // Get semester and year information
+    $semester_query = mysqli_query($conn, "SELECT semester_nama FROM semester WHERE semester_id = '$semester'");
+    $semester_data = mysqli_fetch_assoc($semester_query);
+
+    $tahun_query = mysqli_query($conn, "SELECT tahun_nama FROM tahun WHERE tahun_id = '$tahun'");
+    $tahun_data = mysqli_fetch_assoc($tahun_query);
+    ?>
+
+    <!-- HTML template for report card -->
+    <div class="report-card">
+        <div class="header">
+            <h2><?php echo $sekolah['sekolah_nama']; ?></h2>
+            <p><?php echo $sekolah['sekolah_alamat']; ?></p>
+            <p>Telp: <?php echo $sekolah['sekolah_telp']; ?></p>
+        </div>
+
+        <div class="student-info">
+            <table>
+                <tr>
+                    <td>Nama Siswa</td>
+                    <td>: <?php echo $siswa['name']; ?></td>
+                </tr>
+                <tr>
+                    <td>NIS</td>
+                    <td>: <?php echo $siswa['nomor_induk']; ?></td>
+                </tr>
+                <tr>
+                    <td>Kelas</td>
+                    <td>: <?php echo $siswa['kelas_nama']; ?></td>
+                </tr>
+                <tr>
+                    <td>Semester</td>
+                    <td>: <?php echo $semester_data['semester_nama']; ?></td>
+                </tr>
+                <tr>
+                    <td>Tahun Ajaran</td>
+                    <td>: <?php echo $tahun_data['tahun_nama']; ?></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="grades">
+            <table border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Mata Pelajaran</th>
+                        <th>KKM</th>
+                        <th>Nilai Akhir</th>
+                        <th>Guru Pengajar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $no = 1;
+                    foreach ($nilai_data as $nilai): ?>
+                        <tr>
+                            <td><?php echo $no++; ?></td>
+                            <td><?php echo $nilai['pelajaran_nama']; ?></td>
+                            <td><?php echo $nilai['nilai_kkm']; ?></td>
+                            <td><?php echo $nilai['nilai_akhir']; ?></td>
+                            <td><?php echo $nilai['guru_name']; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <tr>
+                        <td colspan="3"><strong>Rata-rata</strong></td>
+                        <td colspan="2"><strong><?php echo $rata_rata; ?></strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="signatures">
+            <table width="100%">
+                <tr>
+                    <td width="33%">
+                        Orang Tua/Wali,<br><br><br>
+                        ________________
+                    </td>
+                    <td width="33%">
+                        Wali Kelas,<br><br><br>
+                        ________________
+                    </td>
+                    <td width="33%">
+                        Kepala Sekolah,<br><br><br>
+                        ________________
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <?php
+} else {
+    echo "Data siswa tidak ditemukan.";
+}
+?>

@@ -17,9 +17,9 @@
                         <div class="col-sm-10">
                             <select id="e1" style="width:100%;" name="pelajaran" required>
                                 <?php 
-                                    $pelajaran  =   mysql_query("SELECT * FROM pelajaran");
+                                    $pelajaran  =   mysqli_query($conn, "SELECT * FROM pelajaran");
 
-                                    while ($data=mysql_fetch_array($pelajaran)) {
+                                    while ($data=mysqli_fetch_array($pelajaran)) {
                                 ?>
                                 <option value="<?php echo $data['pelajaran_id']; ?>"><?php echo $data['pelajaran_nama']; ?></option>
                                 <?php
@@ -33,9 +33,9 @@
                         <div class="col-sm-10">
                             <select id="e2" style="width:100%;" name="kelas" required>
                                 <?php 
-                                    $kelas  =   mysql_query("SELECT * FROM kelas");
+                                    $kelas  =   mysqli_query($conn, "SELECT * FROM kelas");
 
-                                    while ($data=mysql_fetch_array($kelas)) {
+                                    while ($data=mysqli_fetch_array($kelas)) {
                                 ?>
                                 <option value="<?php echo $data['kelas_id']; ?>"><?php echo $data['kelas_nama']; ?></option>
                                 <?php
@@ -49,9 +49,9 @@
                         <div class="col-sm-10">
                             <select id="e3" style="width:100%;" name="siswa" required>
                                 <?php 
-                                    $siswa  =   mysql_query("SELECT * FROM siswa");
+                                    $siswa  =   mysqli_query($conn, "SELECT * FROM siswa");
 
-                                    while ($data=mysql_fetch_array($siswa)) {
+                                    while ($data=mysqli_fetch_array($siswa)) {
                                 ?>
                                 <option value="<?php echo $data['id']; ?>"><?php echo $data['name']; ?></option>
                                 <?php
@@ -65,9 +65,9 @@
                         <div class="col-sm-10">
                             <select id="e4" style="width:100%;" name="semester" required>
                                 <?php 
-                                    $semester  =   mysql_query("SELECT * FROM semester");
+                                    $semester  =   mysqli_query($conn, "SELECT * FROM semester");
 
-                                    while ($data=mysql_fetch_array($semester)) {
+                                    while ($data=mysqli_fetch_array($semester)) {
                                 ?>
                                 <option value="<?php echo $data['semester_id']; ?>"><?php echo $data['semester_nama']; ?></option>
                                 <?php
@@ -81,9 +81,9 @@
                         <div class="col-sm-10">
                             <select id="e5" style="width:100%;" name="tahun" required>
                                 <?php 
-                                    $tahun  =   mysql_query("SELECT * FROM tahun");
+                                    $tahun  =   mysqli_query($conn, "SELECT * FROM tahun");
 
-                                    while ($data=mysql_fetch_array($tahun)) {
+                                    while ($data=mysqli_fetch_array($tahun)) {
                                 ?>
                                 <option value="<?php echo $data['tahun_id']; ?>"><?php echo $data['tahun_nama']; ?></option>
                                 <?php

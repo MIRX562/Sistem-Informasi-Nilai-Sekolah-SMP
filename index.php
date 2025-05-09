@@ -11,11 +11,7 @@ require_once('config/db.php');
     <!--[if lt IE 9]> 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <![endif]-->
-<<<<<<< HEAD
     <title>Sistem E-Rapor</title>
-=======
-    <title>SMPN 14 Bayu Tutor</title>
->>>>>>> 9c6c95edbcccb84bd1ebe2f42224492e0500262d
     <meta name="description" content="">
     <meta name="author" content="Dictatorkid">
     <!--[if lt IE 9]>
@@ -49,12 +45,8 @@ require_once('config/db.php');
                         <span class="icon-bar"></span>
                     </button>
 
-<<<<<<< HEAD
-                    <a href="#" class="navbar-brand scroll-top logo"><img src="assets/images/logo.png" alt="" style="margin-top:-10px;"> <b>Sistem Informasi E-Rapor</b></a>
-=======
                     <a href="#" class="navbar-brand scroll-top logo"><img src="assets/images/logo.png" alt=""
-                            style="margin-top:-10px;"> <b>Sistem Informasi Akademik</b></a>
->>>>>>> 9c6c95edbcccb84bd1ebe2f42224492e0500262d
+                            style="margin-top:-10px;"> <b>Sistem Informasi E-Rapor</b></a>
                 </div>
                 <!--/.navbar-header-->
                 <div id="main-nav" class="collapse navbar-collapse">
@@ -89,7 +81,6 @@ require_once('config/db.php');
             <div class="container banner-content">
                 <div id="da-slider" class="da-slider">
                     <div class="da-slide">
-<<<<<<< HEAD
                         <h2 style="color:rgb(5, 81, 60);">PONDOK PESANTREN DARUSSALAM</h2>
                         <p>085263319272</p>
                         <div class="da-img"></div>
@@ -97,15 +88,6 @@ require_once('config/db.php');
                     <div class="da-slide">
                         <h2>Sistem Informasi E-Rapor</h2>
                         <p>PONDOK PESANTREN DARUSSALAM | Sumatera Barat</p>
-=======
-                        <h2>Bayu Tutor</h2>
-                        <p>+6289531518231</p>
-                        <div class="da-img"></div>
-                    </div>
-                    <div class="da-slide">
-                        <h2>Sistem Informasi Management Nilai Siswa</h2>
-                        <p>SMP N Bayu Tutor | Sumatera Barat</p>
->>>>>>> 9c6c95edbcccb84bd1ebe2f42224492e0500262d
                         <div class="da-img"></div>
                     </div>
                     <nav class="da-arrows">
@@ -117,48 +99,8 @@ require_once('config/db.php');
         </div>
     </section>
 
-<<<<<<< HEAD
-  
-        <!--/.container-->
-=======
-    <section id="hotnews" class="page-section darkBg pDark pdingBtm30">
-        <div class="container">
-            <div class="heading text-center">
-                <!-- Heading -->
-                <h2><i class="fa fa-fire color"></i> Hot News</h2>
-                <center>
-                    <hr style="width:15%;">
-                </center>
-            </div>
-            <?php
-            $no = 1;
-            $artikel = mysql_query("SELECT *, kategori.kategori_nama FROM artikel
-                                            INNER JOIN kategori ON artikel.kategori_id=kategori.kategori_id
-                                            ORDER BY artikel_tgl DESC");
-            while ($data = mysql_fetch_array($artikel)) {
-                ?>
-                <div class="col-md-6" style="color:#ffffff;">
-                    <h4># <?php echo $no; ?></h4>
-                    <hr />
-                    <h4><?php echo $data['artikel_judul']; ?></h4>
-                    <p style="color:#BBBBBB;"><?php echo substr($data['artikel_isi'], 0, 100); ?></p>
-                    <div class="action-buttons">
-                        <a href="post.php?id=<?php echo "$data[artikel_id]"; ?>">Read More <i
-                                class="fa fa-angle-double-right"></i></a>
-                    </div>
-                    <div class="pull-right"><?php echo $data['kategori_nama'] . " | " . $data['artikel_tgl']; ?></div>
-                    <hr />
 
-                </div>
-                <?php
-                $no++;
-            }
-            ?>
-        </div>
-        <!--/.container-->
-    </section>
     <!--/.container-->
->>>>>>> 9c6c95edbcccb84bd1ebe2f42224492e0500262d
     </section>
     <section id="profile" class="page-section" style="background:#222222;">
         <div class="container">
@@ -171,17 +113,10 @@ require_once('config/db.php');
             </div>
             <div class="row">
                 <div class="col-md-6">
-<<<<<<< HEAD
-                    <p>        
+                    <p>
                         <label style="padding-right:70px;">Name</label> : PONDOK PESANTREN DARUSSALAM AUR DURI <br>
                         <label style="padding-right:33px;">E-Mail</label> : darussalamsumani19@gmail.com <br>
                         <label style="padding-right:17px;">Phone</label> : 085263319272 <br>
-=======
-                    <p>
-                        <label style="padding-right:70px;">Name</label> : Bayu Tutor <br>
-                        <label style="padding-right:33px;">E-Mail</label> : bayututor@gmail.com <br>
-                        <label style="padding-right:17px;">Phone</label> : +6289531518231 <br>
->>>>>>> 9c6c95edbcccb84bd1ebe2f42224492e0500262d
                     </p>
                 </div>
                 <?php
@@ -227,11 +162,7 @@ require_once('config/db.php');
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
-<<<<<<< HEAD
-                    Copyright 2025 | All Rights Reserved | <a href="#">DARUSSALAM</a>        
-=======
-                    Copyright 2023 | All Rights Reserved | <a href="#">Bayu Tutor</a>
->>>>>>> 9c6c95edbcccb84bd1ebe2f42224492e0500262d
+                    Copyright 2025 | All Rights Reserved | <a href="#">DARUSSALAM</a>
                 </div>
             </div>
             <!-- / .row -->

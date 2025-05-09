@@ -1,4 +1,16 @@
 <?php
+session_start();
+include "config/db.php";
+
+if (!isset($_SESSION['id'])) {
+    header('location:../index.php');
+}
+
+$id = $_SESSION['id'];
+$dataprofile = mysqli_query($conn, "SELECT * FROM users WHERE id='$id'");
+$row = mysqli_fetch_array($dataprofile);
+?>
+<?php
 require_once('layout/header.php');
 ?>
 <!-- Main Container -->

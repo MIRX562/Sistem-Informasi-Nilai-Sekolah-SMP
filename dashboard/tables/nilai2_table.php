@@ -3,7 +3,7 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
     $stmt = $koneksi->prepare("DELETE FROM nilai WHERE nilai_id = ?");
     $stmt->bind_param("i", $id);
-    
+
     if ($stmt->execute()) {
         echo "<script>alert('Data berhasil dihapus!'); window.location.href='index.php';</script>";
     } else {
@@ -19,18 +19,18 @@ if (!isset($_POST['pelajaran']) || !isset($_POST['kelas']) || !isset($_POST['sem
     exit;
 }
 
-$pelajaran  =   $_POST['pelajaran'];
-$kelas      =   $_POST['kelas'];
-$semester   =   $_POST['semester'];
-$tahun      =   $_POST['tahun'];
+$pelajaran = $_POST['pelajaran'];
+$kelas = $_POST['kelas'];
+$semester = $_POST['semester'];
+$tahun = $_POST['tahun'];
 
 // Cek apakah ada data nilai
-$check_query = mysql_query("SELECT COUNT(*) as count FROM nilai 
+$check_query = mysqli_query($conn, "SELECT COUNT(*) as count FROM nilai 
                            INNER JOIN users ON nilai.id=users.id 
                            WHERE nilai.pelajaran_id='$pelajaran' AND users.kelas_id='$kelas' 
                            AND nilai.semester_id='$semester' AND nilai.tahun_id='$tahun'");
 
-$check_result = mysql_fetch_array($check_query);
+$check_result = mysqli_fetch_array($check_query);
 
 if ($check_result['count'] == 0) {
     echo "<div class='alert alert-warning'>Tidak ada data nilai yang ditemukan untuk kriteria yang dipilih.</div>";
@@ -39,12 +39,12 @@ if ($check_result['count'] == 0) {
 }
 
 // Ambil informasi pelajaran, kelas, semester, dan tahun
-$info_query = mysql_query("SELECT kelas.kelas_nama, pelajaran.pelajaran_nama, semester.semester_nama, tahun.tahun_nama 
+$info_query = mysqli_query($conn, "SELECT kelas.kelas_nama, pelajaran.pelajaran_nama, semester.semester_nama, tahun.tahun_nama 
                          FROM kelas, pelajaran, semester, tahun
                          WHERE kelas.kelas_id='$kelas' AND pelajaran.pelajaran_id='$pelajaran' 
                          AND semester.semester_id='$semester' AND tahun.tahun_id='$tahun'");
 
-$row = mysql_fetch_array($info_query);
+$row = mysqli_fetch_array($info_query);
 ?>
 
 <div class="col-xs-12 col-md-12">
@@ -56,32 +56,32 @@ $row = mysql_fetch_array($info_query);
             <div class="col-md-6 pull-left">
                 <table width="100%">
                     <tr>
-                        <td width="30%">Pelajaran</td>  
-                        <td width="5%"> : </td> 
-                        <td width="65%"> <?php echo $row['pelajaran_nama']; ?> </td>                                              
+                        <td width="30%">Pelajaran</td>
+                        <td width="5%"> : </td>
+                        <td width="65%"> <?php echo $row['pelajaran_nama']; ?> </td>
                     </tr>
                     <tr>
-                        <td width="30%">Kelas</td>  
-                        <td width="5%"> : </td> 
-                        <td width="65%"> <?php echo $row['kelas_nama']; ?> </td>                                              
-                    </tr>                                            
+                        <td width="30%">Kelas</td>
+                        <td width="5%"> : </td>
+                        <td width="65%"> <?php echo $row['kelas_nama']; ?> </td>
+                    </tr>
                 </table>
             </div>
             <div class="col-md-6 pull-right">
                 <table width="100%">
                     <tr>
-                        <td width="30%">Semester</td>  
-                        <td width="5%"> : </td> 
-                        <td width="65%"> <?php echo $row['semester_nama']; ?> </td>                                              
+                        <td width="30%">Semester</td>
+                        <td width="5%"> : </td>
+                        <td width="65%"> <?php echo $row['semester_nama']; ?> </td>
                     </tr>
                     <tr>
-                        <td width="30%">Tahun ajaran</td>  
-                        <td width="5%"> : </td> 
-                        <td width="65%"> <?php echo $row['tahun_nama']; ?> </td>                                              
+                        <td width="30%">Tahun ajaran</td>
+                        <td width="5%"> : </td>
+                        <td width="65%"> <?php echo $row['tahun_nama']; ?> </td>
                     </tr>
                 </table>
             </div>
-        </div>    
+        </div>
         <table class="table table-hover">
             <thead class="bordered-darkorange">
                 <tr>
@@ -100,10 +100,10 @@ $row = mysql_fetch_array($info_query);
                     <th width="15%">Action</th>
                 </tr>
             </thead>
-            <tbody>                                        
+            <tbody>
                 <?php
-                    $no = 1; 
-                    $nilai_query = mysql_query("SELECT nilai.nilai_id, nilai.nilai_kkm, users.name, 
+                $no = 1;
+                $nilai_query = mysqli_query($conn, "SELECT nilai.nilai_id, nilai.nilai_kkm, users.name, 
                                                nilai.uh, nilai.pas, nilai.p5ra, nilai.tugas, 
                                                nilai.kehadiran, nilai.keaktifan, nilai.kekompakan
                                                FROM nilai 
@@ -111,73 +111,74 @@ $row = mysql_fetch_array($info_query);
                                                INNER JOIN kelas ON users.kelas_id=kelas.kelas_id 
                                                WHERE nilai.pelajaran_id='$pelajaran' AND kelas.kelas_id='$kelas' 
                                                AND nilai.semester_id='$semester' AND nilai.tahun_id='$tahun'
-                                               ORDER BY users.name ASC") or die(mysql_error());
+                                               ORDER BY users.name ASC") or die(mysqli_error($conn));
 
-                    while ($data = mysql_fetch_array($nilai_query)) {
-                        // Hitung nilai_akhir
-                        $uh_value = floatval($data['uh']);
-                        $pas_value = floatval($data['pas']);
-                        $p5ra_value = floatval($data['p5ra']);
-                        $tugas_value = floatval($data['tugas']);
-                        $kehadiran_value = floatval($data['kehadiran']);
-                        $keaktifan_value = floatval($data['keaktifan']);
-                        $kekompakan_value = floatval($data['kekompakan']);
-                        
-                        // Hitung nilai_akhir berdasarkan keberadaan nilai p5ra
-                        if (!empty($data['p5ra']) && $p5ra_value > 0) {
-                            // Jika p5ra ada
-                            $nilai_akhir = ($uh_value * 0.20) + ($pas_value * 0.30) + ($p5ra_value * 0.20) + 
-                                          ($tugas_value * 0.15) + ($kehadiran_value * 0.05) + 
-                                          ($keaktifan_value * 0.05) + ($kekompakan_value * 0.05);
-                        } else {
-                            // Jika p5ra tidak ada
-                            $nilai_akhir = ($uh_value * 0.25) + ($pas_value * 0.35) + ($tugas_value * 0.20) + 
-                                          ($kehadiran_value * 0.075) + ($keaktifan_value * 0.0625) + 
-                                          ($kekompakan_value * 0.0625);
-                        }
-                        
-                        // Bulatkan nilai_akhir ke 2 desimal
-                        $nilai_akhir = round($nilai_akhir, 2);
-                        
-                        // Update nilai_akhir di database
-                        mysql_query("UPDATE nilai SET nilai_akhir = '$nilai_akhir' 
-                                    WHERE nilai_id = '{$data['nilai_id']}'") or die(mysql_error());
-                ?>
-                <tr>
-                    <td><?php echo $no; ?></td>
-                    <td><?php echo $data['name']; ?></td>
-                    <td><?php echo $data['nilai_kkm']; ?></td>
-                    <td><?php echo $data['uh']; ?></td>
-                    <td><?php echo $data['pas']; ?></td>
-                    <td><?php echo $data['p5ra']; ?></td>
-                    <td><?php echo $data['tugas']; ?></td>
-                    <td><?php echo $data['kehadiran']; ?></td>
-                    <td><?php echo $data['keaktifan']; ?></td>
-                    <td><?php echo $data['kekompakan']; ?></td>
-                    <td><?php echo $nilai_akhir; ?></td>
-                    <td>
-                        <?php
-                        if ($data['nilai_kkm'] <= $nilai_akhir) {
-                            echo "Tuntas";
-                        } else {
-                            echo "Tidak Tuntas";
-                        }
-                        ?>
-                    </td>
-                    <td>
-                        
-                        <a href="?nilai-del=<?php echo $data['nilai_id']; ?>" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
-                </tr>
-                <?php
+                while ($data = mysqli_fetch_array($nilai_query)) {
+                    // Hitung nilai_akhir
+                    $uh_value = floatval($data['uh']);
+                    $pas_value = floatval($data['pas']);
+                    $p5ra_value = floatval($data['p5ra']);
+                    $tugas_value = floatval($data['tugas']);
+                    $kehadiran_value = floatval($data['kehadiran']);
+                    $keaktifan_value = floatval($data['keaktifan']);
+                    $kekompakan_value = floatval($data['kekompakan']);
+
+                    // Hitung nilai_akhir berdasarkan keberadaan nilai p5ra
+                    if (!empty($data['p5ra']) && $p5ra_value > 0) {
+                        // Jika p5ra ada
+                        $nilai_akhir = ($uh_value * 0.20) + ($pas_value * 0.30) + ($p5ra_value * 0.20) +
+                            ($tugas_value * 0.15) + ($kehadiran_value * 0.05) +
+                            ($keaktifan_value * 0.05) + ($kekompakan_value * 0.05);
+                    } else {
+                        // Jika p5ra tidak ada
+                        $nilai_akhir = ($uh_value * 0.25) + ($pas_value * 0.35) + ($tugas_value * 0.20) +
+                            ($kehadiran_value * 0.075) + ($keaktifan_value * 0.0625) +
+                            ($kekompakan_value * 0.0625);
+                    }
+
+                    // Bulatkan nilai_akhir ke 2 desimal
+                    $nilai_akhir = round($nilai_akhir, 2);
+
+                    // Update nilai_akhir di database
+                    mysqli_query($conn, "UPDATE nilai SET nilai_akhir = '$nilai_akhir' 
+                                    WHERE nilai_id = '{$data['nilai_id']}'") or die(mysqli_error($conn));
+                    ?>
+                    <tr>
+                        <td><?php echo $no; ?></td>
+                        <td><?php echo $data['name']; ?></td>
+                        <td><?php echo $data['nilai_kkm']; ?></td>
+                        <td><?php echo $data['uh']; ?></td>
+                        <td><?php echo $data['pas']; ?></td>
+                        <td><?php echo $data['p5ra']; ?></td>
+                        <td><?php echo $data['tugas']; ?></td>
+                        <td><?php echo $data['kehadiran']; ?></td>
+                        <td><?php echo $data['keaktifan']; ?></td>
+                        <td><?php echo $data['kekompakan']; ?></td>
+                        <td><?php echo $nilai_akhir; ?></td>
+                        <td>
+                            <?php
+                            if ($data['nilai_kkm'] <= $nilai_akhir) {
+                                echo "Tuntas";
+                            } else {
+                                echo "Tidak Tuntas";
+                            }
+                            ?>
+                        </td>
+                        <td>
+
+                            <a href="?nilai-del=<?php echo $data['nilai_id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    <?php
                     $no++;
-                    }                                            
-                ?>                                                                                
+                }
+                ?>
             </tbody>
         </table>
 
         <div style="padding-top: 20px;">
-            <div style="padding-top: 20px;margin-bottom: -30px;"><a href="?nilai=tampil" class="btn btn-purple">Kembali</a></div>                                   
+            <div style="padding-top: 20px;margin-bottom: -30px;"><a href="?nilai=tampil"
+                    class="btn btn-purple">Kembali</a></div>
         </div>
     </div>
 </div>

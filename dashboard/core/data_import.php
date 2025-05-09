@@ -422,6 +422,189 @@ function importSekolah($conn, $record)
 
     return $conn->query($sql);
 }
+
+if (isset($_POST['import'])) {
+    $fileName = $_FILES["file"]["tmp_name"];
+
+    if ($_FILES["file"]["size"] > 0) {
+        $file = fopen($fileName, "r");
+
+        while (($column = fgetcsv($file, 10000, ",")) !== FALSE) {
+            $sqlInsert = mysqli_query($conn, "INSERT into users (nomor_induk, name, username, password, telp, alamat, status, jenis_kelamin, kelas_id, access)
+                values ('" . mysqli_real_escape_string($conn, $column[1]) . "',
+                        '" . mysqli_real_escape_string($conn, $column[2]) . "',
+                        '" . mysqli_real_escape_string($conn, $column[3]) . "',
+                        '" . mysqli_real_escape_string($conn, $column[4]) . "',
+                        '" . mysqli_real_escape_string($conn, $column[5]) . "',
+                        '" . mysqli_real_escape_string($conn, $column[6]) . "',
+                        '" . mysqli_real_escape_string($conn, $column[7]) . "',
+                        '" . mysqli_real_escape_string($conn, $column[8]) . "',
+                        '" . mysqli_real_escape_string($conn, $column[9]) . "',
+                        '" . mysqli_real_escape_string($conn, $column[10]) . "')");
+
+            if (!$sqlInsert) {
+                echo "<script type=\"text/javascript\">
+                        alert(\"Invalid File:Please Upload CSV File.\");
+                        window.location = \"index.php\"
+                      </script>";
+            }
+        }
+
+        if ($sqlInsert) {
+            echo "<script type=\"text/javascript\">
+                    alert(\"CSV File has been successfully Imported.\");
+                    window.location = \"index.php\"
+                  </script>";
+        }
+        fclose($file);
+    }
+}
+
+include "config/db.php";
+
+// Import Excel for Siswa
+if (isset($_POST['import-siswa'])) {
+    require_once 'PHPExcel/PHPExcel.php';
+
+    $file = $_FILES['file']['tmp_name'];
+    $path = $_FILES['file']['name'];
+    $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+    if ($ext == 'xlsx' || $ext == 'xls') {
+        $objReader = PHPExcel_IOFactory::createReaderForFile($file);
+        $objReader->setLoadSheetsOnly('Siswa');
+
+        $objPHPExcel = $objReader->load($file);
+        $sheetData = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+
+        $highestRow = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+
+        for ($i = 2; $i <= $highestRow; $i++) {
+            $nis = mysqli_real_escape_string($conn, $sheetData[$i]['A']);
+            $username = mysqli_real_escape_string($conn, $sheetData[$i]['B']);
+            $password = password_hash($sheetData[$i]['C'], PASSWORD_DEFAULT);
+            $name = mysqli_real_escape_string($conn, $sheetData[$i]['D']);
+            $telp = mysqli_real_escape_string($conn, $sheetData[$i]['E']);
+            $status = mysqli_real_escape_string($conn, $sheetData[$i]['F']);
+            $kelas = mysqli_real_escape_string($conn, $sheetData[$i]['G']);
+            $jenis_kelamin = mysqli_real_escape_string($conn, $sheetData[$i]['H']);
+            $alamat = mysqli_real_escape_string($conn, $sheetData[$i]['I']);
+            $access = 'siswa';
+
+            $query = mysqli_query($conn, "INSERT INTO users (nomor_induk, username, password, name, telp, status, kelas_id, jenis_kelamin, alamat, access) 
+                                        VALUES ('$nis', '$username', '$password', '$name', '$telp', '$status', '$kelas', '$jenis_kelamin', '$alamat', '$access')");
+        }
+
+        if ($query) {
+            echo "<script>alert('Data berhasil diimport!'); window.location='?users=siswa';</script>";
+        } else {
+            echo "<script>alert('Data gagal diimport!'); window.location='?page=import';</script>";
+        }
+    } else {
+        echo "<script>alert('File yang diupload bukan file Excel!'); window.location='?page=import';</script>";
+    }
+}
+
+// Import Excel for Guru
+if (isset($_POST['import-guru'])) {
+    require_once 'PHPExcel/PHPExcel.php';
+
+    $file = $_FILES['file']['tmp_name'];
+    $path = $_FILES['file']['name'];
+    $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+    if ($ext == 'xlsx' || $ext == 'xls') {
+        $objReader = PHPExcel_IOFactory::createReaderForFile($file);
+        $objReader->setLoadSheetsOnly('Guru');
+
+        $objPHPExcel = $objReader->load($file);
+        $sheetData = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+
+        $highestRow = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+
+        for ($i = 2; $i <= $highestRow; $i++) {
+            $nip = mysqli_real_escape_string($conn, $sheetData[$i]['A']);
+            $username = mysqli_real_escape_string($conn, $sheetData[$i]['B']);
+            $password = password_hash($sheetData[$i]['C'], PASSWORD_DEFAULT);
+            $name = mysqli_real_escape_string($conn, $sheetData[$i]['D']);
+            $telp = mysqli_real_escape_string($conn, $sheetData[$i]['E']);
+            $status = mysqli_real_escape_string($conn, $sheetData[$i]['F']);
+            $kelas = mysqli_real_escape_string($conn, $sheetData[$i]['G']);
+            $jenis_kelamin = mysqli_real_escape_string($conn, $sheetData[$i]['H']);
+            $alamat = mysqli_real_escape_string($conn, $sheetData[$i]['I']);
+            $access = 'guru';
+
+            $query = mysqli_query($conn, "INSERT INTO users (nomor_induk, username, password, name, telp, status, kelas_id, jenis_kelamin, alamat, access) 
+                                        VALUES ('$nip', '$username', '$password', '$name', '$telp', '$status', '$kelas', '$jenis_kelamin', '$alamat', '$access')");
+        }
+
+        if ($query) {
+            echo "<script>alert('Data berhasil diimport!'); window.location='?users=guru';</script>";
+        } else {
+            echo "<script>alert('Data gagal diimport!'); window.location='?page=import';</script>";
+        }
+    } else {
+        echo "<script>alert('File yang diupload bukan file Excel!'); window.location='?page=import';</script>";
+    }
+}
+
+// Import Excel for Nilai
+if (isset($_POST['import-nilai'])) {
+    require_once 'PHPExcel/PHPExcel.php';
+
+    $file = $_FILES['file']['tmp_name'];
+    $path = $_FILES['file']['name'];
+    $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+    if ($ext == 'xlsx' || $ext == 'xls') {
+        $objReader = PHPExcel_IOFactory::createReaderForFile($file);
+        $objReader->setLoadSheetsOnly('Nilai');
+
+        $objPHPExcel = $objReader->load($file);
+        $sheetData = $objPHPExcel->getActiveSheet()->toArray(null, true, true, true);
+
+        $highestRow = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow();
+
+        for ($i = 2; $i <= $highestRow; $i++) {
+            $id = mysqli_real_escape_string($conn, $sheetData[$i]['A']);
+            $pelajaran = mysqli_real_escape_string($conn, $sheetData[$i]['B']);
+            $semester = mysqli_real_escape_string($conn, $sheetData[$i]['C']);
+            $tahun = mysqli_real_escape_string($conn, $sheetData[$i]['D']);
+            $kkm = mysqli_real_escape_string($conn, $sheetData[$i]['E']);
+            $uh = mysqli_real_escape_string($conn, $sheetData[$i]['F']);
+            $pas = mysqli_real_escape_string($conn, $sheetData[$i]['G']);
+            $p5ra = !empty($sheetData[$i]['H']) ? mysqli_real_escape_string($conn, $sheetData[$i]['H']) : NULL;
+            $tugas = mysqli_real_escape_string($conn, $sheetData[$i]['I']);
+            $kehadiran = mysqli_real_escape_string($conn, $sheetData[$i]['J']);
+            $keaktifan = mysqli_real_escape_string($conn, $sheetData[$i]['K']);
+            $kekompakan = mysqli_real_escape_string($conn, $sheetData[$i]['L']);
+
+            // Calculate final grade based on whether P5RA exists
+            if (!empty($p5ra)) {
+                // With P5RA
+                $nilai_akhir = ($uh * 0.20) + ($pas * 0.30) + ($p5ra * 0.20) +
+                    ($tugas * 0.15) + ($kehadiran * 0.05) +
+                    ($keaktifan * 0.05) + ($kekompakan * 0.05);
+            } else {
+                // Without P5RA
+                $nilai_akhir = ($uh * 0.25) + ($pas * 0.35) + ($tugas * 0.20) +
+                    ($kehadiran * 0.075) + ($keaktifan * 0.0625) +
+                    ($kekompakan * 0.0625);
+            }
+
+            $query = mysqli_query($conn, "INSERT INTO nilai (id, pelajaran_id, semester_id, tahun_id, nilai_kkm, uh, pas, p5ra, tugas, kehadiran, keaktifan, kekompakan, nilai_akhir) 
+                                        VALUES ('$id', '$pelajaran', '$semester', '$tahun', '$kkm', '$uh', '$pas', " . ($p5ra ? "'$p5ra'" : "NULL") . ", '$tugas', '$kehadiran', '$keaktifan', '$kekompakan', '$nilai_akhir')");
+        }
+
+        if ($query) {
+            echo "<script>alert('Data berhasil diimport!'); window.location='?nilai=tampil';</script>";
+        } else {
+            echo "<script>alert('Data gagal diimport!'); window.location='?page=import';</script>";
+        }
+    } else {
+        echo "<script>alert('File yang diupload bukan file Excel!'); window.location='?page=import';</script>";
+    }
+}
 ?>
 
 <div class="col-lg-12 col-sm-12 col-xs-12">

@@ -21,13 +21,12 @@
             <tbody>
                 <?php
                 $no = 1;
-                $guru = mysql_query("SELECT users.id, users.nomor_induk, users.name, users.username, users.telp, users.status, users.alamat, users.jenis_kelamin, kelas.kelas_nama 
+                $siswa = mysqli_query($conn, "SELECT users.id, users.nomor_induk, users.name, users.username, users.telp, users.status, users.alamat, users.jenis_kelamin, kelas.kelas_nama 
                                             FROM users 
                                             INNER JOIN kelas ON users.kelas_id=kelas.kelas_id 
-                                            WHERE access='siswa' 
+                                            WHERE access='orang_tua' 
                                             ORDER BY users.name ASC");
-
-                while ($data = mysql_fetch_array($guru)) {
+                while ($data = mysqli_fetch_array($siswa)) {
                     ?>
                     <tr>
                         <td><?php echo $no; ?></td>

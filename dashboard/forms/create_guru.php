@@ -44,9 +44,8 @@
                         <div class="col-sm-10">
                             <select id="e5" style="width:100%;" name="kelas" required>
                                 <?php 
-                                    $kelas  =   mysql_query("SELECT * FROM kelas");
-
-                                    while ($data=mysql_fetch_array($kelas)) {
+                                    $kelas = mysqli_query($conn, "SELECT * FROM kelas");
+                                    while ($data = mysqli_fetch_array($kelas)) {
                                 ?>
                                 <option value="<?php echo $data['kelas_id']; ?>"><?php echo $data['kelas_nama']; ?></option>
                                 <?php

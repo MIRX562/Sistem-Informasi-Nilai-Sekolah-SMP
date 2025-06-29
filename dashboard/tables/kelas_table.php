@@ -24,6 +24,7 @@
                         <td>
                             <a href="?kelas-edit=<?php echo $data['kelas_id']; ?>" class="btn btn-success">Edit</a>
                             <a href="?kelas-del=<?php echo $data['kelas_id']; ?>" class="btn btn-danger">Delete</a>
+                            <a href="?kelas-det=<?php echo $data['kelas_id']; ?>" class="btn btn-info">Detail</a>
                         </td>
                     </tr>
                     <?php

@@ -56,6 +56,7 @@ require_once('layout/header.php');
                 <!-- Your Content Goes Here -->
                 <div class="row">
                     <?php
+                    // ===================== USERS ROUTES =====================
                     if (isset($_GET['users'])) {
                         if ($_GET['users'] == 'admin') {
                             include('tables/admin_table.php');
@@ -73,6 +74,7 @@ require_once('layout/header.php');
                             include('forms/create_siswa.php');
                             include('core/create.php');
                         }
+                        // ===================== END USERS ROUTES =====================
                     } elseif (isset($_GET['admin-edit'])) {
                         include('core/edit.php');
                         include('forms/edit_admin.php');
@@ -88,6 +90,7 @@ require_once('layout/header.php');
                         include('forms/edit_siswa.php');
                     } elseif (isset($_GET['siswa-del'])) {
                         include('core/delete.php');
+                        // ===================== AKADEMIK ROUTES =====================
                     } elseif (isset($_GET['akademik'])) {
                         if ($_GET['akademik'] == 'kelas') {
                             include('tables/kelas_table.php');
@@ -109,7 +112,24 @@ require_once('layout/header.php');
                         } elseif ($_GET['akademik'] == 'sekolah-create') {
                             include('forms/create_sekolah.php');
                             include('core/create.php');
+                        } elseif ($_GET['akademik'] == 'guru_mengajar') {
+                            if (isset($_GET['tahun_id']) && isset($_GET['semester_id'])) {
+                                include('guru_mengajar/list_guru.php');
+                            } else {
+                                include('guru_mengajar/list_tahun.php');
+                            }
+                        } elseif ($_GET['akademik'] == 'guru_mengajar-list_guru' && isset($_GET['tahun_id']) && isset($_GET['semester_id'])) {
+                            include('guru_mengajar/list_guru.php');
+                        } elseif ($_GET['akademik'] == 'guru_mengajar-manage' && isset($_GET['guru_id']) && isset($_GET['tahun_id']) && isset($_GET['semester_id'])) {
+                            include('guru_mengajar/manage.php');
+                        } elseif ($_GET['akademik'] == 'guru_mengajar-create' && isset($_GET['guru_id']) && isset($_GET['tahun_id']) && isset($_GET['semester_id'])) {
+                            include('forms/create_guru_mengajar.php');
+                        } elseif ($_GET['akademik'] == 'guru_mengajar-edit' && isset($_GET['id']) && isset($_GET['guru_id']) && isset($_GET['tahun_id']) && isset($_GET['semester_id'])) {
+                            include('forms/edit_guru_mengajar.php');
+                        } elseif ($_GET['akademik'] == 'guru_mengajar-del' && isset($_GET['id'])) {
+                            include('core/delete_guru_mengajar.php');
                         }
+                        // ===================== END AKADEMIK ROUTES =====================
                     } elseif (isset($_GET['kelas-edit'])) {
                         include('core/edit.php');
                         include('forms/edit_kelas.php');
@@ -137,16 +157,18 @@ require_once('layout/header.php');
                             include('forms/input_nilai.php');
                             include('core/create.php');
                         } elseif ($_GET['nilai'] == 'cetak') {
-                            include('forms/print_rapor.php');
+                            include('forms/cetak_nilai_rapor.php');
                         }
                         // elseif ($_GET['nilai'] == 'generate') {
                         //     include('core/generate_report_pdf.php');
                         // }
+                        // ===================== END NILAI ROUTES =====================
                     } elseif (isset($_GET['nilai-edit'])) {
                         include('core/edit.php');
                         include('forms/edit_nilai.php');
                     } elseif (isset($_GET['nilai-del'])) {
                         include('core/delete.php');
+                        // ===================== MODUL ROUTES =====================
                     } elseif (isset($_GET['modul'])) {
                         if ($_GET['modul'] == 'upload') {
                             include('forms/upload.php');
@@ -154,8 +176,10 @@ require_once('layout/header.php');
                         } elseif ($_GET['modul'] == 'download') {
                             include('tables/download_table.php');
                         }
+                        // ===================== END MODUL ROUTES =====================
                     } elseif (isset($_GET['modul-del'])) {
                         include('core/delete.php');
+                        // ===================== ARTIKEL ROUTES =====================
                     } elseif (isset($_GET['artikel'])) {
                         if ($_GET['artikel'] == 'list') {
                             include('tables/artikel_table.php');
@@ -168,6 +192,7 @@ require_once('layout/header.php');
                             include('forms/create_kategori.php');
                             include('core/create.php');
                         }
+                        // ===================== END ARTIKEL ROUTES =====================
                     } elseif (isset($_GET['artikel-edit'])) {
                         include('core/edit.php');
                         include('forms/edit_artikel.php');
@@ -178,14 +203,34 @@ require_once('layout/header.php');
                     } elseif (isset($_GET['kategori-edit'])) {
                         include('core/edit.php');
                         include('forms/edit_kategori.php');
+                        // ===================== PROFILE & SETTINGS ROUTES =====================
                     } elseif (isset($_GET['profile'])) {
                         include('core/edit.php');
                         include('tables/profile.php');
                     } elseif (isset($_GET['change'])) {
                         include('core/edit.php');
                         include('forms/change_password.php');
+                        // ===================== DATA IMPORT ROUTE =====================
                     } elseif (isset($_GET['data']) && $_GET['data'] == 'import') {
                         include('core/data_import.php');
+                        // ===================== DETAIL ROUTES =====================
+                    } elseif (isset($_GET['kelas-det'])) {
+                        include('tables/detail_kelas.php');
+                    } elseif (isset($_GET['pelajaran-det'])) {
+                        include('tables/detail_pelajaran.php');
+                    } elseif (isset($_GET['tahun-detail'])) {
+                        include('tables/tahun_detail.php');
+                    } else {
+                        // Dashboard root: show dashboard based on user access
+                        if ($row['access'] == 'admin') {
+                            include('dashboard_admin.php');
+                        } elseif ($row['access'] == 'guru') {
+                            include('dashboard_guru.php');
+                        } elseif ($row['access'] == 'orang_tua') {
+                            include('dashboard_orangtua.php');
+                        } else {
+                            echo '<div class="alert alert-info">Selamat datang di dashboard.</div>';
+                        }
                     }
                     ?>
                 </div>

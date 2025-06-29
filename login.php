@@ -11,7 +11,7 @@ if (isset($_SESSION['username'])) {
 
     <head>
         <meta charset="utf-8" />
-        <title>Login - Sistem Informasi Rapor</title>
+        <title>Login</title>
 
         <meta name="description" content="login page" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,30 +27,30 @@ if (isset($_SESSION['username'])) {
     <!--Body-->
 
     <body style="padding-top: 150px;">
-        <div class="container">
-            <div class="card card-container">
-                <img id="profile-img" class="profile-img-card" src="assets/images/logo1.jpg" />
-                <p id="profile-name" class="profile-name-card">Sistem Informasi Rapor</p>
-                <form class="form-signin" method="post" action="core/login_proses.php">
-                    <span id="reauth-email" class="reauth-email"></span>
-                    <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
-                    <input type="password" name="password" class="form-control" placeholder="Kata Sandi" required>
-                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="login">Masuk</button>
-                </form>
-                <?php if (isset($_GET['pesan'])): ?>
-                    <div class="alert alert-danger">
-                        <?php
-                        if ($_GET['pesan'] == "gagal") {
-                            echo "Username dan Password tidak sesuai!";
-                        } else if ($_GET['pesan'] == "logout") {
-                            echo "Anda telah berhasil keluar sistem";
-                        } else if ($_GET['pesan'] == "belum_login") {
-                            echo "Anda harus login terlebih dahulu";
-                        }
-                        ?>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <h2>Please Sign In</h2>
+                <form class="form-horizontal" role="form" method="post">
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="username" placeholder="Enter Username">
+                        </div>
                     </div>
-                <?php endif; ?>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" name="password" placeholder="Enter password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary btn-block" name="signin">Sign In</button>
+                        </div>
+                    </div>
+                </form>
+                <?php require_once('core/login_proses.php'); ?>
             </div>
+            <div class="col-sm-4"></div>
         </div>
 
         <!--Basic Scripts-->

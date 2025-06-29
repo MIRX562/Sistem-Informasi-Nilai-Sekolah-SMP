@@ -55,6 +55,21 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-2 control-label no-padding-right">Pelajaran</label>
+                        <div class="col-sm-10">
+                            <select id="e6" style="width:100%;" name="pelajaran_id" required>
+                                <?php 
+                                    $pelajaran = mysqli_query($conn, "SELECT * FROM pelajaran");
+                                    while ($data = mysqli_fetch_array($pelajaran)) {
+                                ?>
+                                <option value="<?php echo $data['pelajaran_id']; ?>"><?php echo $data['pelajaran_nama']; ?></option>
+                                <?php
+                                    }
+                                ?>                                                                
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-2 control-label no-padding-right">Telepon</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="telp" placeholder="Telepon" required>

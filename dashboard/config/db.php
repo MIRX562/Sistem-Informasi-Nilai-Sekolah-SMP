@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "root";
-$pass = "";
+$pass = "asemjowo";
 $database = "sims2";
 
 $conn = mysqli_connect($host, $user, $pass, $database);

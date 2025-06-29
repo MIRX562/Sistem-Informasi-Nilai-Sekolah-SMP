@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';
 $username = 'root';
-$password = '';
+$password = 'asemjowo';
 $database = 'sims2';
 
 // Create connection

@@ -56,13 +56,13 @@ require_once('config/db.php');
                         <?php
                         if (isset($_SESSION['username'])) {
                             ?>
-                            <li><a href="dashboard/" class="scroll-link">Dashboard</a></li>
-                            <li><a href="logout.php" class="scroll-link">Logout</a></li>
-                            <?php
+                        <li><a href="dashboard/" class="scroll-link">Dashboard</a></li>
+                        <li><a href="logout.php" class="scroll-link">Logout</a></li>
+                        <?php
                         } else {
                             ?>
-                            <li><a href="#profile" class="scroll-link">Login</a></li>
-                            <?php
+                        <li><a href="#profile" class="scroll-link">Login</a></li>
+                        <?php
                         }
                         ?>
                     </ul>
@@ -77,12 +77,12 @@ require_once('config/db.php');
     <div id="#top"></div>
     <section id="home">
         <div class="banner-container">
-            <img src="assets/images/A1.jpg" alt="banner" />
+            <img src="assets/images/9B.jpg" alt="banner" />
             <div class="container banner-content">
                 <div id="da-slider" class="da-slider">
                     <div class="da-slide">
-                        <h2 style="color:rgb(5, 81, 60);">PONDOK PESANTREN DARUSSALAM</h2>
-                        <p>085263319272</p>
+                        <h2> PONDOK PESANTREN DARUSSALAM</h2>
+                        <p>(0755) 325554</p>
                         <div class="da-img"></div>
                     </div>
                     <div class="da-slide">
@@ -115,29 +115,29 @@ require_once('config/db.php');
                 <div class="col-md-6">
                     <p>
                         <label style="padding-right:70px;">Name</label> : PONDOK PESANTREN DARUSSALAM AUR DURI <br>
-                        <label style="padding-right:33px;">E-Mail</label> : darussalamsumani19@gmail.com <br>
-                        <label style="padding-right:17px;">Phone</label> : 085263319272 <br>
+                        <label style="padding-right:70px;">E-Mail</label> : darussalamsumani19@gmail.com <br>
+                        <label style="padding-right:70px;">Phone</label> : (0755) 325554 <br>
                     </p>
                 </div>
                 <?php
                 if (!isset($_SESSION['access'])) {
                     ?>
-                    <div class="col-md-6">
-                        <form role="form" action="core/login_proses.php" method="post">
-                            <div class="form-group">
-                                <h4 style="color:#999999;">username :</h4>
-                                <input type="text" class="form-control" placeholder="Enter username" name="username"
-                                    required>
-                            </div>
-                            <div class="form-group">
-                                <h4 style="color:#999999;">Password :</h4>
-                                <input type="password" class="form-control" placeholder="Enter password" name="password"
-                                    required>
-                            </div>
-                            <button type="submit" class="btn btn-warning btn-block" name="signin">Login</button>
-                        </form>
-                    </div>
-                    <?php
+                <div class="col-md-6">
+                    <form role="form" action="core/login_proses.php" method="post">
+                        <div class="form-group">
+                            <h4 style="color:#999999;">username :</h4>
+                            <input type="text" class="form-control" placeholder="Enter username" name="username"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <h4 style="color:#999999;">Password :</h4>
+                            <input type="password" class="form-control" placeholder="Enter password" name="password"
+                                required>
+                        </div>
+                        <button type="submit" class="btn btn-warning btn-block" name="signin">Login</button>
+                    </form>
+                </div>
+                <?php
                 }
                 ?>
             </div>
@@ -162,7 +162,7 @@ require_once('config/db.php');
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    Copyright 2025 | All Rights Reserved | <a href="#">DARUSSALAM</a>
+                    Copyright 2025 | All Rights Reserved | <a href="#">ANISA SUCI RAMADHANI</a>
                 </div>
             </div>
             <!-- / .row -->

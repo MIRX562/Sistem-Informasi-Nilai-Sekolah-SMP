@@ -95,8 +95,14 @@
                                 <span class="menu-text">Data Sekolah</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="?akademik=guru_mengajar">
+                                <span class="menu-text">Guru Mengajar</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
+
                 <li>
                     <a href="#" class="menu-dropdown">
                         <i class="menu-icon fa fa-signal"></i>

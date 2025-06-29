@@ -15,6 +15,7 @@
                     <th>Alamat</th>
                     <th>Jenis Kelamin</th>
                     <th>Kelas</th>
+                    <th>Pelajaran</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -22,9 +23,10 @@
                 <?php
                 $no = 1;
                 $guru = mysqli_query($conn, "SELECT users.id, users.nomor_induk, users.name, users.username, users.telp, users.status, 
-                                                users.alamat, users.jenis_kelamin, kelas.kelas_nama 
+                                                users.alamat, users.jenis_kelamin, kelas.kelas_nama, pelajaran.pelajaran_nama
                                                 FROM users 
                                                 INNER JOIN kelas ON users.kelas_id=kelas.kelas_id 
+                                                INNER JOIN pelajaran ON users.pelajaran_id=pelajaran.pelajaran_id 
                                                 WHERE access='guru' 
                                                 ORDER BY users.name ASC");
 
@@ -40,6 +42,7 @@
                         <td><?php echo $data['alamat']; ?></td>
                         <td><?php echo $data['jenis_kelamin']; ?></td>
                         <td><?php echo $data['kelas_nama']; ?></td>
+                        <td><?php echo $data['pelajaran_nama']; ?></td>
                         <td>
                             <a href="?guru-edit=<?php echo $data['id']; ?>" class="btn btn-success">Edit</a>
                             <a href="?guru-del=<?php echo $data['id']; ?>" class="btn btn-danger">Delete</a>

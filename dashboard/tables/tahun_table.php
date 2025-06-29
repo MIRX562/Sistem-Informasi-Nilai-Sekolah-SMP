@@ -18,15 +18,16 @@
 
                 while ($data = mysqli_fetch_array($tahun)) {
                     ?>
-                    <tr>
-                        <td><?php echo $no; ?></td>
-                        <td><?php echo $data['tahun_nama']; ?></td>
-                        <td>
-                            <a href="?tahun-edit=<?php echo $data['tahun_id']; ?>" class="btn btn-success">Edit</a>
-                            <a href="?tahun-del=<?php echo $data['tahun_id']; ?>" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                    <?php
+                <tr>
+                    <td><?php echo $no; ?></td>
+                    <td><?php echo $data['tahun_nama']; ?></td>
+                    <td>
+                        <a href="?tahun-edit=<?php echo $data['tahun_id']; ?>" class="btn btn-success">Edit</a>
+                        <a href="?tahun-del=<?php echo $data['tahun_id']; ?>" class="btn btn-danger">Delete</a>
+                        <a href="?tahun-detail=<?php echo $data['tahun_id']; ?>" class="btn btn-info">Detail</a>
+                    </td>
+                </tr>
+                <?php
                     $no++;
                 }
                 ?>

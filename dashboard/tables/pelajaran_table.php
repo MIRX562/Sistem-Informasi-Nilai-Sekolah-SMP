@@ -24,6 +24,7 @@
                         <td>
                             <a href="?pelajaran-edit=<?php echo $data['pelajaran_id']; ?>" class="btn btn-success">Edit</a>
                             <a href="?pelajaran-del=<?php echo $data['pelajaran_id']; ?>" class="btn btn-danger">Delete</a>
+                            <a href="?pelajaran-det=<?php echo $data['pelajaran_id']; ?>" class="btn btn-info">Detail</a>
                         </td>
                     </tr>
                     <?php

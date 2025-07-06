@@ -1,30 +1,31 @@
 <?php
 //Admin Edit 
 if (isset($_GET['admin-edit'])) {
-    $adminEdit = intval($_GET['admin-edit']);
-    $id = mysqli_real_escape_string($conn, $_GET['admin-edit']);
+	$adminEdit = intval($_GET['admin-edit']);
+	$id = mysqli_real_escape_string($conn, $_GET['admin-edit']);
 
-    if (isset($_POST['admin-update'])) {
-        $username = mysqli_real_escape_string($conn, $_POST['username']);
-        $name = mysqli_real_escape_string($conn, $_POST['name']);
-        $telp = mysqli_real_escape_string($conn, $_POST['telp']);
-        $status = mysqli_real_escape_string($conn, $_POST['status']);
-        $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
-        $kelamin = mysqli_real_escape_string($conn, $_POST['jenis_kelamin']);
+	if (isset($_POST['admin-update'])) {
+		$username = mysqli_real_escape_string($conn, $_POST['username']);
+		$name = mysqli_real_escape_string($conn, $_POST['name']);
+		$telp = mysqli_real_escape_string($conn, $_POST['telp']);
+		$status = mysqli_real_escape_string($conn, $_POST['status']);
+		$alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
+		$kelamin = mysqli_real_escape_string($conn, $_POST['jenis_kelamin']);
 
-        $admin = mysqli_query($conn, "UPDATE users 
+		$admin = mysqli_query($conn, "UPDATE users 
                             SET `name` = '$name', `username` = '$username', `telp` = '$telp', 
                                 `alamat` = '$alamat', `status` = '$status', `jenis_kelamin` = '$kelamin'
                             WHERE id = '$id'");
-        if ($admin) {
-            echo "<meta http-equiv='refresh' content='0;URL=?users=admin'>";
-        }
-    }
+		if ($admin) {
+			echo "<meta http-equiv='refresh' content='0;URL=?users=admin'>";
+		}
+	}
 
-    $dataadmin = mysqli_query($conn, "SELECT * FROM users WHERE id=$id") or die("Error: " . mysqli_error($conn));
-    $row = mysqli_fetch_array($dataadmin);
+	$dataadmin = mysqli_query($conn, "SELECT * FROM users WHERE id=$id") or die("Error: " . mysqli_error($conn));
+	$row = mysqli_fetch_array($dataadmin);
 }
 ?>
+
 <?php
 //Guru Edit
 if (isset($_GET['guru-edit'])) {
@@ -53,6 +54,7 @@ if (isset($_GET['guru-edit'])) {
 	$row = mysqli_fetch_array($dataguru);
 }
 ?>
+
 <?php
 //Siswa Edit
 if (isset($_GET['siswa-edit'])) {
@@ -252,7 +254,6 @@ if (isset($_GET['change'])) {
 }
 ?>
 <?php
-include "config/db.php";
 
 // Update admin
 if (isset($_POST['admin-update'])) {
@@ -571,6 +572,7 @@ if (isset($_POST['pelajaran-update'])) {
 	}
 }
 ?>
+
 <?php
 //Kategori Update
 if (isset($_POST['kategori-update'])) {
@@ -594,9 +596,9 @@ if (isset($_POST['change-password'])) {
 	$id = $_GET['change'];
 	$password = $_POST['password'];
 
+	$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 	$change = mysqli_query($conn, "UPDATE users SET 
-                                password='" . mysqli_real_escape_string($conn, $password) . "'
-                                WHERE id='" . mysqli_real_escape_string($conn, $id) . "'");
+                                password='" . mysqli_real_escape_string($conn, $hashed_password) . "'\n                                WHERE id='" . mysqli_real_escape_string($conn, $id) . "'");
 
 	if ($change) {
 		echo "<meta http-equiv='refresh' content='0;URL=?my=profile'>";

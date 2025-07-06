@@ -140,6 +140,8 @@ require_once('layout/header.php');
                         include('forms/edit_tahun.php');
                     } elseif (isset($_GET['tahun-del'])) {
                         include('core/delete.php');
+                    } elseif (isset($_GET['set_active_tahun'])) {
+                        include('core/update.php');
                     } elseif (isset($_GET['pelajaran-edit'])) {
                         include('core/edit.php');
                         include('forms/edit_pelajaran.php');

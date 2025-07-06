@@ -8,9 +8,24 @@
                 <table width="100%">
                     <tr>
                         <?php
-                        $pelajaran = $_POST['pelajaran'];
+                        $pelajaran = isset($_POST['pelajaran']) ? intval($_POST['pelajaran']) : 0;
                         $sql = mysqli_query($conn, "SELECT * FROM pelajaran WHERE pelajaran_id=$pelajaran");
-                        $row = mysqli_fetch_array($sql);
+                        $row = $sql && mysqli_num_rows($sql) ? mysqli_fetch_array($sql) : ['pelajaran_nama' => '-'];
+
+                        $kelas = isset($_POST['kelas']) ? intval($_POST['kelas']) : 0;
+                        $sql = mysqli_query($conn, "SELECT * FROM kelas WHERE kelas_id=$kelas");
+                        $row_kelas = $sql && mysqli_num_rows($sql) ? mysqli_fetch_array($sql) : ['kelas_nama' => '-'];
+
+                        $tahun = isset($_POST['tahun']) ? intval($_POST['tahun']) : 0;
+                        $semester = isset($_POST['semester']) ? intval($_POST['semester']) : 0;
+
+                        // Query teacher's name for this class, subject, year, and semester
+                        $guru_nama = '-';
+                        $sql_guru = mysqli_query($conn, "SELECT u.name as guru_nama FROM guru_mengajar gm INNER JOIN users u ON gm.guru_id = u.id WHERE gm.kelas_id='$kelas' AND gm.pelajaran_id='$pelajaran' AND gm.tahun_id='$tahun' AND gm.semester_id='$semester' AND gm.status='aktif' LIMIT 1");
+                        if ($sql_guru && mysqli_num_rows($sql_guru)) {
+                            $row_guru = mysqli_fetch_array($sql_guru);
+                            $guru_nama = $row_guru['guru_nama'];
+                        }
                         ?>
                         <td width="30%">Mata Pelajaran</td>
                         <td width="5%"> : </td>
@@ -18,13 +33,17 @@
                     </tr>
                     <tr>
                         <?php
-                        $kelas = $_POST['kelas'];
                         $sql = mysqli_query($conn, "SELECT * FROM kelas WHERE kelas_id=$kelas");
-                        $row = mysqli_fetch_array($sql);
+                        $row = $sql && mysqli_num_rows($sql) ? mysqli_fetch_array($sql) : ['kelas_nama' => '-'];
                         ?>
                         <td width="30%">Kelas</td>
                         <td width="5%"> : </td>
-                        <td width="65%"> <?php echo $row['kelas_nama']; ?> </td>
+                        <td width="65%"> <?php echo $row_kelas['kelas_nama']; ?> </td>
+                    </tr>
+                    <tr>
+                        <td width="30%">Guru</td>
+                        <td width="5%"> : </td>
+                        <td width="65%"> <?php echo $guru_nama; ?> </td>
                     </tr>
                 </table>
             </div>
@@ -32,9 +51,9 @@
                 <table width="100%">
                     <tr>
                         <?php
-                        $semester = $_POST['semester'];
+                        $semester = isset($_POST['semester']) ? intval($_POST['semester']) : 0;
                         $sql = mysqli_query($conn, "SELECT * FROM semester WHERE semester_id=$semester");
-                        $row = mysqli_fetch_array($sql);
+                        $row = $sql && mysqli_num_rows($sql) ? mysqli_fetch_array($sql) : ['semester_nama' => '-'];
                         ?>
                         <td width="30%">Semester</td>
                         <td width="5%"> : </td>
@@ -42,13 +61,29 @@
                     </tr>
                     <tr>
                         <?php
-                        $tahun = $_POST['tahun'];
+                        $tahun = isset($_POST['tahun']) ? intval($_POST['tahun']) : 0;
                         $sql = mysqli_query($conn, "SELECT * FROM tahun WHERE tahun_id=$tahun");
-                        $row = mysqli_fetch_array($sql);
+                        $row = $sql && mysqli_num_rows($sql) ? mysqli_fetch_array($sql) : ['tahun_nama' => '-'];
                         ?>
                         <td width="30%">Tahun ajaran</td>
                         <td width="5%"> : </td>
                         <td width="65%"> <?php echo $row['tahun_nama']; ?> </td>
+                    </tr>
+                    <tr>
+                        <?php
+                        // Query to get the teacher's name for the selected class, subject, year, and semester
+                        $kelas = isset($_POST['kelas']) ? intval($_POST['kelas']) : 0;
+                        $pelajaran = isset($_POST['pelajaran']) ? intval($_POST['pelajaran']) : 0;
+                        // $guru_nama = '-';
+                        $sql_guru = mysqli_query($conn, "SELECT g.guru_nama FROM guru_mengajar gm INNER JOIN guru g ON gm.guru_id = g.guru_id WHERE gm.kelas_id='$kelas' AND gm.pelajaran_id='$pelajaran' AND gm.tahun_id='$tahun' AND gm.semester_id='$semester' AND gm.status='aktif' LIMIT 1");
+                        if ($sql_guru && mysqli_num_rows($sql_guru)) {
+                            $row_guru = mysqli_fetch_array($sql_guru);
+                            $guru_nama = $row_guru['guru_nama'];
+                        }
+                        ?>
+                        <!-- <td width="30%">Guru Pengampu</td>
+                        <td width="5%"> : </td> -->
+                        <!-- <td width="65%"> <?php echo $guru_nama; ?> </td> -->
                     </tr>
                 </table>
             </div>

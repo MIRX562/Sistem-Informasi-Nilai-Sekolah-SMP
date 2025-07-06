@@ -16,12 +16,12 @@
             <div class="databox databox-graded databox-xlg databox-shadowed bg-white radius-bordered">
                 <div class="databox-left">
                     <div class="databox-piechart">
-                        <i class="fa fa-users fa-3x text-info"></i>
+                        <i class="glyphicon glyphicon-user fa-3x text-info"></i>
                     </div>
                 </div>
                 <div class="databox-right">
                     <span class="databox-number sky">
-                        <?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE access='siswa'")); ?>
+                        <?php echo mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE access='orang_tua'")); ?>
                     </span>
                     <div class="databox-text darkgray">Total Siswa</div>
                 </div>
@@ -31,7 +31,7 @@
             <div class="databox databox-graded databox-xlg databox-shadowed bg-white radius-bordered">
                 <div class="databox-left">
                     <div class="databox-piechart">
-                        <i class="fa fa-address-card fa-3x text-success"></i>
+                        <i class="glyphicon glyphicon-briefcase fa-3x text-success"></i>
                     </div>
                 </div>
                 <div class="databox-right">
@@ -46,7 +46,7 @@
             <div class="databox databox-graded databox-xlg databox-shadowed bg-white radius-bordered">
                 <div class="databox-left">
                     <div class="databox-piechart">
-                        <i class="fa fa-school fa-3x text-warning"></i>
+                        <i class="glyphicon glyphicon-home fa-3x text-warning"></i>
                     </div>
                 </div>
                 <div class="databox-right">
@@ -61,7 +61,7 @@
             <div class="databox databox-graded databox-xlg databox-shadowed bg-white radius-bordered">
                 <div class="databox-left">
                     <div class="databox-piechart">
-                        <i class="fa fa-book fa-3x text-danger"></i>
+                        <i class="glyphicon glyphicon-book fa-3x text-danger"></i>
                     </div>
                 </div>
                 <div class="databox-right">

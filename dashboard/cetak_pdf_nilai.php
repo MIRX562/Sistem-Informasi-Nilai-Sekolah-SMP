@@ -4,7 +4,7 @@
     require_once('fpdf/fpdf.php');
 
     if (!isset($_GET['pelajaran']) || !isset($_GET['kelas']) || !isset($_GET['semester']) || !isset($_GET['tahun'])) {
-        echo "<script>alert('Parameter tidak lengkep!'); window.history.back();</script>";
+        echo "<script>alert('Parameter tidak lengkap!'); window.history.back();</script>";
         exit;
     }
 
@@ -32,6 +32,29 @@
 
     $info = mysqli_fetch_array($info_query);
 
+    // Query untuk mendapatkan nama guru yang mengajar mata pelajaran ini
+    $guru_query = mysqli_query($conn, "SELECT name as guru_nama FROM users 
+                                      WHERE access = 'guru' AND pelajaran_id = '$pelajaran' 
+                                      LIMIT 1");
+    
+    if ($guru_query && mysqli_num_rows($guru_query) > 0) {
+        $guru_data = mysqli_fetch_array($guru_query);
+        $nama_guru = $guru_data['guru_nama'];
+    } else {
+        // Jika tidak ada guru khusus untuk mata pelajaran ini, ambil guru manapun
+        $guru_fallback = mysqli_query($conn, "SELECT name as guru_nama FROM users 
+                                             WHERE access = 'guru' 
+                                             LIMIT 1");
+        if ($guru_fallback && mysqli_num_rows($guru_fallback) > 0) {
+            $guru_data = mysqli_fetch_array($guru_fallback);
+            $nama_guru = $guru_data['guru_nama'];
+        } else {
+            $nama_guru = 'Nama Guru';
+        }
+    }
+
+    // Gabungkan info dengan nama guru
+    $info['guru_nama'] = $nama_guru;
 
     class PDF extends FPDF
     {
@@ -67,7 +90,7 @@
             $this->Text(45, 22, 'PONDOK PESANTREN DARUSSALAM AUR DURI SUMANI');
             
             $this->SetFont('Arial', '', 9);
-            $this->Text(45, 28, 'Jln. Lintas Sumatra Km.9 Kab. Solok |  Telp: (0755) 325554 | Email: pesantrendarussalam19@gmail.com ');
+            $this->Text(45, 28, 'Jl. Raya Pendidikan No. 123, Sungayang - Tanah Datar |  Telp: (0752) 123456 | Email: info@sman1sungayang.sch.id');
             
             
             // Info tanggal di kanan atas
@@ -83,18 +106,24 @@
             $this->SetFillColor(236, 240, 241);
             $this->SetDrawColor(149, 165, 166);
             $this->Rect(15, 45, 267, 25, 'DF');
-            
+             
             // Informasi mata pelajaran dalam box
             $this->SetTextColor(44, 62, 80);
             $this->SetFont('Arial', 'B', 11);
             $this->Text(20, 53, 'INFORMASI PELAJARAN');
-            
+
             $this->SetFont('Arial', '', 10);
+            // Kolom 1
             $this->Text(20, 60, 'Mata Pelajaran : ' . $this->info_data['pelajaran_nama']);
-            $this->Text(20, 66, 'Kelas                  : ' . $this->info_data['kelas_nama']);
-            
-            $this->Text(150, 60, 'Semester        : ' . $this->info_data['semester_nama']);
-            $this->Text(150, 66, 'Tahun Ajaran : ' . $this->info_data['tahun_nama']);
+            $this->Text(20, 66, 'Kelas           : ' . $this->info_data['kelas_nama']);
+
+            // Kolom 2
+            $this->Text(90, 60, 'Semester       : ' . $this->info_data['semester_nama']);
+            $this->Text(90, 66, 'Tahun Ajaran   : ' . $this->info_data['tahun_nama']);
+
+            // Kolom 3
+            $this->Text(160, 60, 'Nama Guru      : ' . $this->info_data['guru_nama']);
+
             
             // Posisi untuk tabel
             $this->SetY(75);
@@ -315,23 +344,19 @@
     $pdf->SetFont('Arial', 'B', 16);
     $pdf->Cell(80, 8, $persentase_tuntas . '%', 0, 0, 'C');
 
-    // ttd
+    // Tanda tangan sederhana tanpa kotak dan garis
     $pdf->Ln(25);
     $pdf->SetTextColor(44, 62, 80);
     $pdf->SetFont('Arial', '', 10);
 
-    // Box ttd
-    $pdf->SetFillColor(248, 249, 250);
-    $pdf->SetDrawColor(189, 195, 199);
-    $pdf->Rect(200, $pdf->GetY(), 80, 30, 'DF');
-
-    $pdf->SetXY(205, $pdf->GetY() + 5);
-    $pdf->Cell(70, 6, 'Sumani, ' . date('d F Y'), 0, 1, 'C');
-    $pdf->SetX(205);
-    $pdf->Cell(70, 6, 'Guru Mata Pelajaran', 0, 1, 'C');
+    // Posisi tanda tangan di kanan
+    $pdf->SetXY(200, $pdf->GetY());
+    $pdf->Cell(80, 6, 'Sungayang, ' . date('d F Y'), 0, 1, 'C');
+    $pdf->SetX(200);
+    $pdf->Cell(80, 6, 'Guru Mata Pelajaran', 0, 1, 'C');
     $pdf->Ln(10);
-    $pdf->SetX(205);
-    $pdf->Cell(70, 6, '(_____________________)', 0, 1, 'C');
+    $pdf->SetX(200);
+    $pdf->Cell(80, 6, '(' . $nama_guru . ')', 0, 1, 'C');
 
     // Output PDF
     $filename = 'Laporan_Nilai_' . str_replace(' ', '_', $info['pelajaran_nama']) . '_' . 

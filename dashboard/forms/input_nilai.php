@@ -54,12 +54,12 @@ if (isset($_POST['input-nilai'])) {
                                         // Admin bisa akses semua mata pelajaran
                                         $pelajaran = mysqli_query($conn, "SELECT pelajaran_id, pelajaran_nama FROM pelajaran ORDER BY pelajaran_nama ASC");
                                     } else {
-                                        // Guru hanya pelajaran yang diajar (dari guru_mengajar)
+                                        // Guru hanya pelajaran yang diajar dan aktif (dari guru_mengajar)
                                         $pelajaran = mysqli_query($conn, "SELECT DISTINCT p.pelajaran_id, p.pelajaran_nama 
-                                        FROM pelajaran p
-                                        INNER JOIN guru_mengajar gm ON p.pelajaran_id = gm.pelajaran_id
-                                        WHERE gm.guru_id = '$user_id' AND gm.status = 'aktif'
-                                        ORDER BY p.pelajaran_nama ASC");
+            FROM pelajaran p
+            INNER JOIN guru_mengajar gm ON p.pelajaran_id = gm.pelajaran_id
+            WHERE gm.guru_id = '$user_id' AND gm.status = 'aktif'
+            ORDER BY p.pelajaran_nama ASC");
                                     }
                                     while ($data = mysqli_fetch_array($pelajaran)) {
                                         ?>
@@ -82,12 +82,12 @@ if (isset($_POST['input-nilai'])) {
                                         // Admin bisa akses semua kelas
                                         $kelas = mysqli_query($conn, "SELECT kelas_id, kelas_nama FROM kelas ORDER BY kelas_nama ASC");
                                     } else {
-                                        // Guru hanya kelas yang diajar (dari guru_mengajar)
+                                        // Guru hanya kelas yang diajar dan aktif (dari guru_mengajar)
                                         $kelas = mysqli_query($conn, "SELECT DISTINCT k.kelas_id, k.kelas_nama 
-                                        FROM kelas k
-                                        INNER JOIN guru_mengajar gm ON k.kelas_id = gm.kelas_id
-                                        WHERE gm.guru_id = '$user_id' AND gm.status = 'aktif'
-                                        ORDER BY k.kelas_nama ASC");
+            FROM kelas k
+            INNER JOIN guru_mengajar gm ON k.kelas_id = gm.kelas_id
+            WHERE gm.guru_id = '$user_id' AND gm.status = 'aktif'
+            ORDER BY k.kelas_nama ASC");
                                     }
                                     while ($data = mysqli_fetch_array($kelas)) {
                                         ?>

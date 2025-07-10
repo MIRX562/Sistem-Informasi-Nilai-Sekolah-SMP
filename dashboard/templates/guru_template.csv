@@ -1,0 +1,3 @@
+nomor_induk,username,password,name,status,telp,jenis_kelamin,alamat,pelajaran_id
+19876543,guru1,pass123,Guru Satu,PNS,081234567890,Laki-laki,Jl. Pendidikan 1,1
+19876544,guru2,pass456,Guru Dua,Honorer,081234567891,Perempuan,Jl. Pendidikan 2,2

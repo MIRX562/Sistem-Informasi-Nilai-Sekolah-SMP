@@ -7,12 +7,9 @@ $pelajaran_query = mysqli_query($conn, "SELECT * FROM pelajaran WHERE pelajaran_
 $pelajaran_data = mysqli_fetch_array($pelajaran_query);
 
 // Query untuk mendapatkan daftar guru yang mengajar pelajaran ini
-$guru_query = mysqli_query($conn, "SELECT users.id, users.nomor_induk, users.name, users.username, users.telp, users.status, 
-                                        users.alamat, users.jenis_kelamin, kelas.kelas_nama, pelajaran.pelajaran_nama
+$guru_query = mysqli_query($conn, "SELECT users.id, users.nomor_induk, users.name, users.username, users.telp, users.status, users.alamat, users.jenis_kelamin
                                         FROM users 
-                                        INNER JOIN kelas ON users.kelas_id=kelas.kelas_id 
-                                        INNER JOIN pelajaran ON users.pelajaran_id=pelajaran.pelajaran_id 
-                                        WHERE users.access='guru' AND users.pelajaran_id='$pelajaran_id'
+                                        WHERE users.access='guru'
                                         ORDER BY users.name ASC");
 ?>
 
@@ -21,7 +18,7 @@ $guru_query = mysqli_query($conn, "SELECT users.id, users.nomor_induk, users.nam
         <div class="header bg-blue">
             Detail Mata Pelajaran: <?php echo $pelajaran_data['pelajaran_nama']; ?>
         </div>
-        
+
         <!-- Informasi Pelajaran -->
         <div class="panel panel-default" style="margin-bottom: 20px;">
             <div class="panel-heading">
@@ -59,7 +56,6 @@ $guru_query = mysqli_query($conn, "SELECT users.id, users.nomor_induk, users.nam
                                 <th>Status</th>
                                 <th>Alamat</th>
                                 <th>Jenis Kelamin</th>
-                                <th>Kelas</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -77,10 +73,11 @@ $guru_query = mysqli_query($conn, "SELECT users.id, users.nomor_induk, users.nam
                                     <td><?php echo $guru_data['status']; ?></td>
                                     <td><?php echo $guru_data['alamat']; ?></td>
                                     <td><?php echo $guru_data['jenis_kelamin']; ?></td>
-                                    <td><?php echo $guru_data['kelas_nama']; ?></td>
                                     <td>
-                                        <a href="?guru-edit=<?php echo $guru_data['id']; ?>" class="btn btn-success btn-sm">Edit</a>
-                                        <a href="?guru-del=<?php echo $guru_data['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                                        <a href="?guru-edit=<?php echo $guru_data['id']; ?>"
+                                            class="btn btn-success btn-sm">Edit</a>
+                                        <a href="?guru-del=<?php echo $guru_data['id']; ?>"
+                                            class="btn btn-danger btn-sm">Delete</a>
                                     </td>
                                 </tr>
                                 <?php

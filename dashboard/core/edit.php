@@ -39,18 +39,17 @@ if (isset($_GET['guru-edit'])) {
 		$status = mysqli_real_escape_string($conn, $_POST['status']);
 		$alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
 		$kelamin = mysqli_real_escape_string($conn, $_POST['jenis_kelamin']);
-		$kelas = mysqli_real_escape_string($conn, $_POST['kelas']);
 
 		$guru = mysqli_query($conn, "UPDATE users 
                             SET `nomor_induk` = '$nip', `name` = '$name', `username` = '$username', `telp` = '$telp', 
-                                `alamat` = '$alamat', `status` = '$status', `jenis_kelamin` = '$kelamin', `kelas_id` = '$kelas'
+                                `alamat` = '$alamat', `status` = '$status', `jenis_kelamin` = '$kelamin'
                             WHERE id = '$id'");
 		if ($guru) {
 			echo "<meta http-equiv='refresh' content='0;URL=?users=guru'>";
 		}
 	}
 
-	$dataguru = mysqli_query($conn, "SELECT *, kelas.kelas_nama FROM users INNER JOIN kelas ON users.kelas_id=kelas.kelas_id WHERE id=$id");
+	$dataguru = mysqli_query($conn, "SELECT * FROM users WHERE id=$id");
 	$row = mysqli_fetch_array($dataguru);
 }
 ?>
@@ -287,7 +286,6 @@ if (isset($_POST['guru-update'])) {
 	$name = mysqli_real_escape_string($conn, $_POST['name']);
 	$telp = mysqli_real_escape_string($conn, $_POST['telp']);
 	$status = mysqli_real_escape_string($conn, $_POST['status']);
-	$kelas = mysqli_real_escape_string($conn, $_POST['kelas']);
 	$jenis_kelamin = mysqli_real_escape_string($conn, $_POST['jenis_kelamin']);
 	$alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
 
@@ -297,7 +295,6 @@ if (isset($_POST['guru-update'])) {
                                 name='$name',
                                 telp='$telp',
                                 status='$status',
-                                kelas_id='$kelas',
                                 jenis_kelamin='$jenis_kelamin',
                                 alamat='$alamat'
                                 WHERE id='$id' AND access='guru'");
@@ -483,7 +480,6 @@ if (isset($_POST['guru-update'])) {
 	$status = $_POST['status'];
 	$alamat = $_POST['alamat'];
 	$kelamin = $_POST['jenis_kelamin'];
-	$kelas = $_POST['kelas'];
 
 	$guru = mysqli_query($conn, "UPDATE users SET 
                                 nomor_induk='" . mysqli_real_escape_string($conn, $nip) . "',
@@ -491,8 +487,7 @@ if (isset($_POST['guru-update'])) {
                                 telp='" . mysqli_real_escape_string($conn, $telp) . "',
                                 status='" . mysqli_real_escape_string($conn, $status) . "',
                                 alamat='" . mysqli_real_escape_string($conn, $alamat) . "',
-                                jenis_kelamin='" . mysqli_real_escape_string($conn, $kelamin) . "',
-                                kelas_id='" . mysqli_real_escape_string($conn, $kelas) . "'
+                                jenis_kelamin='" . mysqli_real_escape_string($conn, $kelamin) . "'
                                 WHERE id='" . mysqli_real_escape_string($conn, $id) . "'");
 
 	if ($guru) {

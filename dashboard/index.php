@@ -161,60 +161,25 @@ require_once('layout/header.php');
                         } elseif ($_GET['nilai'] == 'cetak') {
                             include('forms/cetak_nilai_rapor.php');
                         }
-                        // elseif ($_GET['nilai'] == 'generate') {
-                        //     include('core/generate_report_pdf.php');
-                        // }
-                        // ===================== END NILAI ROUTES =====================
                     } elseif (isset($_GET['nilai-edit'])) {
                         include('core/edit.php');
                         include('forms/edit_nilai.php');
                     } elseif (isset($_GET['nilai-del'])) {
                         include('core/delete.php');
-                        // ===================== MODUL ROUTES =====================
-                    } elseif (isset($_GET['modul'])) {
-                        if ($_GET['modul'] == 'upload') {
-                            include('forms/upload.php');
-                            include('core/create.php');
-                        } elseif ($_GET['modul'] == 'download') {
-                            include('tables/download_table.php');
-                        }
-                        // ===================== END MODUL ROUTES =====================
-                    } elseif (isset($_GET['modul-del'])) {
-                        include('core/delete.php');
-                        // ===================== ARTIKEL ROUTES =====================
-                    } elseif (isset($_GET['artikel'])) {
-                        if ($_GET['artikel'] == 'list') {
-                            include('tables/artikel_table.php');
-                        } elseif ($_GET['artikel'] == 'artikel-create') {
-                            include('forms/create_artikel.php');
-                            include('core/create.php');
-                        } elseif ($_GET['artikel'] == 'kategori') {
-                            include('tables/kategori_table.php');
-                        } elseif ($_GET['artikel'] == 'kategori-create') {
-                            include('forms/create_kategori.php');
-                            include('core/create.php');
-                        }
-                        // ===================== END ARTIKEL ROUTES =====================
-                    } elseif (isset($_GET['artikel-edit'])) {
+                    } elseif (isset($_GET['nilai-edit'])) {
                         include('core/edit.php');
-                        include('forms/edit_artikel.php');
-                    } elseif (isset($_GET['artikel-del'])) {
-                        include('core/delete.php');
-                    } elseif (isset($_GET['kategori-del'])) {
-                        include('core/delete.php');
-                    } elseif (isset($_GET['kategori-edit'])) {
-                        include('core/edit.php');
-                        include('forms/edit_kategori.php');
-                        // ===================== PROFILE & SETTINGS ROUTES =====================
+                        include('forms/edit_nilai.php');
                     } elseif (isset($_GET['profile'])) {
                         include('core/edit.php');
                         include('tables/profile.php');
+                        // ===================== END NILAI ROUTES =====================
                     } elseif (isset($_GET['change'])) {
                         include('core/edit.php');
                         include('forms/change_password.php');
                         // ===================== DATA IMPORT ROUTE =====================
                     } elseif (isset($_GET['data']) && $_GET['data'] == 'import') {
-                        include('core/data_import.php');
+                        include('core/import.php');
+                        include('forms/import-data-view.php');
                         // ===================== DETAIL ROUTES =====================
                     } elseif (isset($_GET['kelas-det'])) {
                         include('tables/detail_kelas.php');

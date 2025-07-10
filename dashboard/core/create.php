@@ -26,23 +26,22 @@ if (isset($_POST['create-admin'])) {
 if (isset($_POST['create-guru'])) {
 	$nip = mysqli_real_escape_string($conn, $_POST['nip']);
 	$username = mysqli_real_escape_string($conn, $_POST['username']);
-	$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+	$password = mysqli_real_escape_string($conn, $_POST['password']);
 	$name = mysqli_real_escape_string($conn, $_POST['name']);
-	$telp = mysqli_real_escape_string($conn, $_POST['telp']);
 	$status = mysqli_real_escape_string($conn, $_POST['status']);
-	$kelas = mysqli_real_escape_string($conn, $_POST['kelas']);
-	$pelajaran_id = mysqli_real_escape_string($conn, $_POST['pelajaran_id']);
+	$telp = mysqli_real_escape_string($conn, $_POST['telp']);
 	$jenis_kelamin = mysqli_real_escape_string($conn, $_POST['jenis_kelamin']);
 	$alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
 	$access = 'guru';
 
-	$query = mysqli_query($conn, "INSERT INTO users (nomor_induk, username, password, name, telp, status, kelas_id, pelajaran_id, jenis_kelamin, alamat, access) 
-                                 VALUES ('$nip', '$username', '$password', '$name', '$telp', '$status', '$kelas', '$pelajaran_id', '$jenis_kelamin', '$alamat', '$access')");
+	// Hash password if needed
+	$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-	if ($query) {
-		echo "<script>alert('Data berhasil ditambahkan!'); window.location='?users=guru';</script>";
+	$query = "INSERT INTO users (nomor_induk, name, username, password, telp, alamat, status, jenis_kelamin, access) VALUES ('$nip', '$name', '$username', '$hashed_password', '$telp', '$alamat', '$status', '$jenis_kelamin', '$access')";
+	if (mysqli_query($conn, $query)) {
+		echo "<script>alert('Guru berhasil ditambahkan!'); window.location='?users=guru';</script>";
 	} else {
-		echo "<script>alert('Data gagal ditambahkan!'); window.location='?users=guru-create';</script>";
+		echo '<div class="alert alert-danger">Gagal menambahkan guru: ' . mysqli_error($conn) . '</div>';
 	}
 }
 
@@ -182,15 +181,37 @@ if (isset($_POST['create-sekolah'])) {
 
 // Create tahun
 if (isset($_POST['create-tahun'])) {
-    $tahun = mysqli_real_escape_string($conn, $_POST['tahun']);
+	$tahun = mysqli_real_escape_string($conn, $_POST['tahun']);
 
-    $query = mysqli_query($conn, "INSERT INTO tahun (tahun_nama) VALUES ('$tahun')");
+	$query = mysqli_query($conn, "INSERT INTO tahun (tahun_nama) VALUES ('$tahun')");
 
-    if ($query) {
-        echo "<script>alert('Tahun ajaran berhasil ditambahkan!'); window.location='?akademik=tahun';</script>";
-    } else {
-        echo "<script>alert('Tahun ajaran gagal ditambahkan!'); window.location='?akademik=tahun-create';</script>";
-    }
+	if ($query) {
+		echo "<script>alert('Tahun ajaran berhasil ditambahkan!'); window.location='?akademik=tahun';</script>";
+	} else {
+		echo "<script>alert('Tahun ajaran gagal ditambahkan!'); window.location='?akademik=tahun-create';</script>";
+	}
+}
+
+// Create pelajaran
+if (isset($_POST['create-pelajaran'])) {
+	$pelajaran = mysqli_real_escape_string($conn, $_POST['pelajaran']);
+	$query = mysqli_query($conn, "INSERT INTO pelajaran (pelajaran_nama) VALUES ('$pelajaran')");
+	if ($query) {
+		echo "<script>alert('Mata pelajaran berhasil ditambahkan!'); window.location='?akademik=pelajaran';</script>";
+	} else {
+		echo "<script>alert('Mata pelajaran gagal ditambahkan!'); window.location='?akademik=pelajaran-create';</script>";
+	}
+}
+
+// Create kelas
+if (isset($_POST['create-kelas'])) {
+	$kelas = mysqli_real_escape_string($conn, $_POST['kelas']);
+	$query = mysqli_query($conn, "INSERT INTO kelas (kelas_nama) VALUES ('$kelas')");
+	if ($query) {
+		echo "<script>alert('Kelas berhasil ditambahkan!'); window.location='?akademik=kelas';</script>";
+	} else {
+		echo "<script>alert('Kelas gagal ditambahkan!'); window.location='?akademik=kelas-create';</script>";
+	}
 }
 
 ?>

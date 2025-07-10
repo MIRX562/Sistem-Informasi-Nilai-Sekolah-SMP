@@ -1,0 +1,3 @@
+nomor_induk,username,password,name,telp,status,jenis_kelamin,alamat,kelas_id
+20230001,siswa1,pass123,Siswa Satu,081234567800,Aktif,Laki-laki,Jl. Siswa 1,1
+20230002,siswa2,pass456,Siswa Dua,081234567801,Aktif,Perempuan,Jl. Siswa 2,2

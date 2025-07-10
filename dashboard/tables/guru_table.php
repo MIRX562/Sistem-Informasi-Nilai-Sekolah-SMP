@@ -14,42 +14,36 @@
                     <th>Status</th>
                     <th>Alamat</th>
                     <th>Jenis Kelamin</th>
-                    <th>Kelas</th>
-                    <th>Pelajaran</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $no = 1;
-                $guru = mysqli_query($conn, "SELECT users.id, users.nomor_induk, users.name, users.username, users.telp, users.status, 
-                                                users.alamat, users.jenis_kelamin, kelas.kelas_nama, pelajaran.pelajaran_nama
-                                                FROM users 
-                                                INNER JOIN kelas ON users.kelas_id=kelas.kelas_id 
-                                                INNER JOIN pelajaran ON users.pelajaran_id=pelajaran.pelajaran_id 
-                                                WHERE access='guru' 
-                                                ORDER BY users.name ASC");
+                $guru = mysqli_query($conn, "SELECT users.id, users.nomor_induk, users.name, users.username, users.telp, users.status, users.alamat, users.jenis_kelamin FROM users WHERE access='guru' ORDER BY users.name ASC");
 
-                while ($data = mysqli_fetch_array($guru)) {
-                    ?>
-                    <tr>
-                        <td><?php echo $no; ?></td>
-                        <td><?php echo $data['nomor_induk']; ?></td>
-                        <td><?php echo $data['name']; ?></td>
-                        <td><?php echo $data['username']; ?></td>
-                        <td><?php echo $data['telp']; ?></td>
-                        <td><?php echo $data['status']; ?></td>
-                        <td><?php echo $data['alamat']; ?></td>
-                        <td><?php echo $data['jenis_kelamin']; ?></td>
-                        <td><?php echo $data['kelas_nama']; ?></td>
-                        <td><?php echo $data['pelajaran_nama']; ?></td>
-                        <td>
-                            <a href="?guru-edit=<?php echo $data['id']; ?>" class="btn btn-success">Edit</a>
-                            <a href="?guru-del=<?php echo $data['id']; ?>" class="btn btn-danger">Delete</a>
-                        </td>
-                    </tr>
-                    <?php
-                    $no++;
+                if (!$guru) {
+                    echo '<tr><td colspan="9">Query error: ' . mysqli_error($conn) . '</td></tr>';
+                } else {
+                    while ($data = mysqli_fetch_array($guru)) {
+                        ?>
+                        <tr>
+                            <td><?php echo $no; ?></td>
+                            <td><?php echo $data['nomor_induk']; ?></td>
+                            <td><?php echo $data['name']; ?></td>
+                            <td><?php echo $data['username']; ?></td>
+                            <td><?php echo $data['telp']; ?></td>
+                            <td><?php echo $data['status']; ?></td>
+                            <td><?php echo $data['alamat']; ?></td>
+                            <td><?php echo $data['jenis_kelamin']; ?></td>
+                            <td>
+                                <a href="?guru-edit=<?php echo $data['id']; ?>" class="btn btn-success">Edit</a>
+                                <a href="?guru-del=<?php echo $data['id']; ?>" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        <?php
+                        $no++;
+                    }
                 }
                 ?>
             </tbody>

@@ -37,24 +37,9 @@
                                 <option <?php if ($row['status'] == 'PNS') {
                                     echo 'selected';
                                 } ?>>PNS</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label no-padding-right">Kelas</label>
-                        <div class="col-sm-10">
-                            <select id="e5" style="width:100%;" name="kelas" required>
-                                <?php
-                                $kelas = mysqli_query($conn, "SELECT * FROM kelas");
-                                while ($data = mysqli_fetch_array($kelas)) {
-                                    ?>
-                                    <option value="<?php echo $data['kelas_id']; ?>" <?php if ($row['kelas_id'] == $data['kelas_id']) {
-                                           echo 'selected';
-                                       } ?>>
-                                        <?php echo $data['kelas_nama']; ?></option>
-                                    <?php
-                                }
-                                ?>
+                                <option <?php if ($row['status'] == 'Non-Aktif') {
+                                    echo 'selected';
+                                } ?>>Non-Aktif</option>
                             </select>
                         </div>
                     </div>

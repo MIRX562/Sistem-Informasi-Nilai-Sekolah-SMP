@@ -36,36 +36,7 @@
                             <select id="e1" style="width:100%;" name="status" required>
                                 <option>Honorer</option>
                                 <option>PNS</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label no-padding-right">Kelas</label>
-                        <div class="col-sm-10">
-                            <select id="e5" style="width:100%;" name="kelas" required>
-                                <?php 
-                                    $kelas = mysqli_query($conn, "SELECT * FROM kelas");
-                                    while ($data = mysqli_fetch_array($kelas)) {
-                                ?>
-                                <option value="<?php echo $data['kelas_id']; ?>"><?php echo $data['kelas_nama']; ?></option>
-                                <?php
-                                    }
-                                ?>                                                                
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label no-padding-right">Pelajaran</label>
-                        <div class="col-sm-10">
-                            <select id="e6" style="width:100%;" name="pelajaran_id" required>
-                                <?php 
-                                    $pelajaran = mysqli_query($conn, "SELECT * FROM pelajaran");
-                                    while ($data = mysqli_fetch_array($pelajaran)) {
-                                ?>
-                                <option value="<?php echo $data['pelajaran_id']; ?>"><?php echo $data['pelajaran_nama']; ?></option>
-                                <?php
-                                    }
-                                ?>                                                                
+                                <option>Non-Aktif</option>
                             </select>
                         </div>
                     </div>
@@ -90,7 +61,7 @@
                             <textarea type="text" class="form-control" name="alamat" required></textarea>
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-primary" name="create-guru">Create</button>

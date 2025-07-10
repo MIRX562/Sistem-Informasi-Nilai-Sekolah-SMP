@@ -9,13 +9,15 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label no-padding-right">Username</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="username" value="<?php echo $row['username']; ?>" placeholder="Username" required>
+                            <input type="text" class="form-control" name="username"
+                                value="<?php echo $row['username']; ?>" placeholder="Username" required>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label no-padding-right">Nama</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="name" value="<?php echo $row['name']; ?>" placeholder="Nama" required>
+                            <input type="text" class="form-control" name="name" value="<?php echo $row['name']; ?>"
+                                placeholder="Nama" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -23,15 +25,16 @@
                         <div class="col-sm-10">
                             <select id="e1" style="width:100%;" name="status" required>
                                 <option><?php echo $row['status']; ?></option>
-                                <option>Honorer</option>
-                                <option>PNS</option>
+                                <option>Aktif</option>
+                                <option>Non-Aktif</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label no-padding-right">Telepon</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="telp" value="<?php echo $row['telp']; ?>" placeholder="Telepon" required>
+                            <input type="text" class="form-control" name="telp" value="<?php echo $row['telp']; ?>"
+                                placeholder="Telepon" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -47,9 +50,11 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label no-padding-right">Alamat</label>
                         <div class="col-sm-10">
-                            <textarea type="text" class="form-control" name="alamat" required><?php echo $row['alamat']; ?></textarea>
+                            <textarea type="text" class="form-control" name="alamat"
+                                required><?php echo $row['alamat']; ?></textarea>
                         </div>
-                    </div><hr/>
+                    </div>
+                    <hr />
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-primary" name="admin-update">Update</button>

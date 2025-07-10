@@ -1,6 +1,6 @@
 <?php
 // Cek akses user terlebih dahulu
-$user_id = $_SESSION['id']; 
+$user_id = $_SESSION['id'];
 
 // Validasi bahwa user yang mengakses adalah guru atau admin
 $user_check = mysqli_query($conn, "SELECT * FROM users WHERE id = '$user_id' AND (access = 'guru' OR access = 'admin')");
@@ -15,7 +15,7 @@ $user_access = $user_data['access'];
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    
+
     // Validasi hak untuk menghapus nilai
     if ($user_access == 'admin') {
         // Admin bisa menghapus nilai manapun
@@ -31,14 +31,14 @@ if (isset($_GET['id'])) {
                                               AND guru.access = 'guru'
                                               AND guru.pelajaran_id = n.pelajaran_id");
     }
-    
+
     $validasi_result = mysqli_fetch_array($validasi_hapus);
-    
+
     if ($validasi_result['count'] == 0) {
         echo "<script>alert('Anda tidak memiliki hak untuk menghapus nilai ini!'); window.location.href='index.php';</script>";
         exit;
     }
-    
+
     $stmt = $koneksi->prepare("DELETE FROM nilai WHERE nilai_id = ?");
     $stmt->bind_param("i", $id);
 
@@ -61,25 +61,6 @@ $pelajaran = $_POST['pelajaran'];
 $kelas = $_POST['kelas'];
 $semester = $_POST['semester'];
 $tahun = $_POST['tahun'];
-
-// VALIDASI AKSES berdasarkan level user
-if ($user_access == 'guru') {
-    // Guru hanya bisa melihat nilai dari kelas dan mata pelajaran yang dia ajar
-    $validasi_akses = mysqli_query($conn, "SELECT COUNT(*) as count 
-                                          FROM users 
-                                          WHERE id = '$user_id' 
-                                          AND access = 'guru' 
-                                          AND kelas_id = '$kelas' 
-                                          AND pelajaran_id = '$pelajaran'");
-    $akses_data = mysqli_fetch_array($validasi_akses);
-
-    if ($akses_data['count'] == 0) {
-        echo "<div class='alert alert-danger'><strong>Akses Ditolak!</strong> Anda tidak memiliki hak untuk melihat nilai pada kelas dan mata pelajaran yang dipilih.</div>";
-        echo "<a href='?nilai=tampil' class='btn btn-purple'>Kembali</a>";
-        exit;
-    }
-}
-// Admin tidak perlu validasi akses karena memiliki akses penuh
 
 // Cek apakah ada data nilai
 $check_query = mysqli_query($conn, "SELECT COUNT(*) as count FROM nilai 
@@ -111,20 +92,22 @@ $user_info_data = mysqli_fetch_array($user_info);
 <div class="col-xs-12 col-md-12">
     <div class="well with-header with-footer">
         <div class="header bg-blue">
-            Nilai - <?php echo $user_info_data['name']; ?> 
-            <?php if ($user_access == 'admin') echo '<span class="badge badge-admin">ADMIN</span>'; ?>
+            Nilai - <?php echo $user_info_data['name']; ?>
+            <?php if ($user_access == 'admin')
+                echo '<span class="badge badge-admin">ADMIN</span>'; ?>
         </div>
-        
+
         <!-- Informasi Akses -->
-        <div class="alert <?php echo ($user_access == 'admin') ? 'alert-success' : 'alert-info'; ?>" style="margin: 15px;">
-            <strong>Info:</strong> 
+        <div class="alert <?php echo ($user_access == 'admin') ? 'alert-success' : 'alert-info'; ?>"
+            style="margin: 15px;">
+            <strong>Info:</strong>
             <?php if ($user_access == 'admin'): ?>
                 Sebagai Admin, Anda memiliki akses penuh untuk melihat dan mengelola nilai semua kelas dan mata pelajaran.
             <?php else: ?>
                 Anda hanya dapat melihat dan mengelola nilai untuk kelas dan mata pelajaran yang Anda ajar.
             <?php endif; ?>
         </div>
-        
+
         <div class="col-lg-12" style="padding-bottom: 20px;">
             <div class="col-md-6 pull-left">
                 <table width="100%">
@@ -238,10 +221,12 @@ $user_info_data = mysqli_fetch_array($user_info);
                             ?>
                         </td>
                         <td>
-                            <a href="?nilai-del=<?php echo $data['nilai_id']; ?>" 
-                               class="btn btn-danger btn-sm"
-                               onclick="return confirm('Apakah Anda yakin ingin menghapus nilai siswa <?php echo $data['name']; ?>?')">
+                            <a href="?nilai-del=<?php echo $data['nilai_id']; ?>" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Apakah Anda yakin ingin menghapus nilai siswa <?php echo $data['name']; ?>?')">
                                 <i class="fa fa-trash"></i> Delete
+                            </a>
+                            <a href="?nilai-edit=<?php echo $data['nilai_id']; ?>" class="btn btn-warning btn-sm">
+                                <i class="fa fa-edit"></i> Edit
                             </a>
                         </td>
                     </tr>
@@ -269,15 +254,15 @@ $user_info_data = mysqli_fetch_array($user_info);
                 $akses_cetak_data = mysqli_fetch_array($guru_akses_cetak);
                 $akses_cetak_count = $akses_cetak_data['count'];
             }
-            
+
             if ($akses_cetak_count > 0) {
-            ?>
-            <a href="cetak_pdf_nilai.php?pelajaran=<?php echo $pelajaran; ?>&kelas=<?php echo $kelas; ?>&semester=<?php echo $semester; ?>&tahun=<?php echo $tahun; ?>&user_id=<?php echo $user_id; ?>" 
-               class="btn btn-success" target="_blank">
-                <i class="fa fa-print"></i> Cetak PDF
-            </a>
+                ?>
+                <a href="cetak_pdf_nilai.php?pelajaran=<?php echo $pelajaran; ?>&kelas=<?php echo $kelas; ?>&semester=<?php echo $semester; ?>&tahun=<?php echo $tahun; ?>&user_id=<?php echo $user_id; ?>"
+                    class="btn btn-success" target="_blank">
+                    <i class="fa fa-print"></i> Cetak PDF
+                </a>
             <?php } ?>
-            
+
             <a href="?nilai=tampil" class="btn btn-purple">
                 <i class="fa fa-arrow-left"></i> Kembali
             </a>
